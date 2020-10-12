@@ -219,7 +219,7 @@ export default {
       this.avatar.selected = event;
     },
     // eslint-disable-next-line no-unused-vars
-    onSubmit(values) {
+    onSubmit(values, { form }) {
       // if(event) {
       //   event.preventDefault();
       // }
@@ -227,6 +227,18 @@ export default {
       this.$toast.add({severity:'success', summary: 'Success Message', detail:'Order submitted', life: 3000});
 
       console.log("PatientDTO:" + this.patient);
+      this.validationEntity.lastName = Yup.string().required('El apellido es requerido');
+      this.validationSchema = Yup.object().shape(this.validationEntity);
+      form.setFieldError('lastName', 'this email is already taken');
+
+      // this.$validator.validate("lastName");
+      // this.validate();
+
+      this.validationSchema.validate(this.patient)
+      .then(() => {})
+      .catch((err) => {
+        console.log("error:" + err);
+      });
 
       restApi.post('/v1/patients', {
         body: this.patient

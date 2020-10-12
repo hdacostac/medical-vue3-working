@@ -3,7 +3,7 @@
       <label :for="id" class="label">{{ label }}</label>
       <div class="control">
          <Field :name="id" v-slot="{ field }">
-            <PrimeInputText :id="id" :name="id" class="input" :type="type" v-model="value" v-bind="field" :placeHolder="placeHolder" />
+            <PrimeInputText :id="id" :name="id" :label="label" class="input" :type="type" v-model="value" v-bind="field" :placeHolder="placeHolder" />
             <ErrorMessage :name="id" v-slot="{ message }">
                <InlineMessage v-show="message">{{ message }}</InlineMessage>
             </ErrorMessage>
