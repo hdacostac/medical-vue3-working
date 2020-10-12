@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import oauthClient from '@/configuration/oauth.config.js';
 
 import SimplestLayout from '../layouts/SimplestLayout.vue';
 
@@ -25,6 +26,12 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  oauthClient.checkSecurityConstraint();
+
+  return next();
 })
 
 export default router
