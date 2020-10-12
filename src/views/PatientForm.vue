@@ -5,7 +5,7 @@
     <Form @submit="onSubmit" :validation-schema="validationSchema">
       <Tabs :model="tab_model"></Tabs>
       <div id="tab1" class="container is-fluid">
-        <h1 class="title">Información personal</h1>
+        <h1 class="title">{{ t('title') }}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
             <AvatarUpload :avatar="avatar.images[avatar.selected]"></AvatarUpload>
@@ -105,7 +105,8 @@ import AvatarUpload from '@/components/AvatarUpload.vue';
 import InputText from '@/components/InputText.vue';
 import SelectOptions from '@/components/SelectOptions.vue';
 import RadioOptions from '@/components/RadioOptions.vue';
-import Calendar from '@/components/Calendar.vue'
+import Calendar from '@/components/Calendar.vue';
+import Toast from 'primevue/toast';
 
 //Validation part
 import { Form } from 'vee-validate';
@@ -117,6 +118,8 @@ import * as Yup from "yup";
 import { restApi, fillArrayFromRest } from '@/configuration/rest.config';
 import patientDTO from '@/model/PatientDTO';
 
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'PatientForm',
   components: {
@@ -127,14 +130,14 @@ export default {
     SelectOptions, 
     RadioOptions, 
     Calendar,
-    Form
+    Form,
+    Toast
   },
-  // setup() {
-  //   const i18n = setupI18n();
-  //   const {t, locale} = useI18n(i18n);
+  setup() {
+    const {t, locale} = useI18n();
 
-  //   return {t, locale};
-  // },
+    return {t, locale};
+  },
   data() {
     const validationEntity = {
       name: Yup.string().required().label('Nombres')
@@ -236,7 +239,7 @@ export default {
       //   event.preventDefault();
       // }
 
-      this.$toast.add({severity:'success', summary: 'Default Message'});
+      this.$toast.add({severity:'success', summary: 'Success Message', detail:'Order submitted', life: 3000});
 
       console.log("PatientDTO:" + this.patient);
 

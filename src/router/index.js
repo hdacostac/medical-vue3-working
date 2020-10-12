@@ -2,15 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router';
 import oauthClient from '@/configuration/oauth.config.js';
 
 import SimplestLayout from '../layouts/SimplestLayout.vue';
+import MainLayout from '../layouts/MainLayout.vue';
 
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue';
+import PatientForm from '../views/PatientForm.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-    meta: { layout: SimplestLayout }
+    name: 'PatientForm',
+    component: PatientForm,
+    meta: { layout: MainLayout }
   },
   {
     path: '/about',
