@@ -1,5 +1,6 @@
 <template>
    <div>
+      <Toast />
       <!-- START NAV -->
       <nav class="navbar is-white">
          <div class="container">
@@ -106,8 +107,13 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
+import Toast from 'primevue/toast';
+
 export default {
-  name: "MainLayout"
+  name: "MainLayout",
+  components: {
+    Toast
+  },
 };
 </script>
 

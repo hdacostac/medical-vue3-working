@@ -1,11 +1,10 @@
 /* eslint-disable vue/no-deprecated-slot-attribute */
 <template>
   <div>
-    <Toast />
     <Form @submit="onSubmit" :validation-schema="validationSchema">
       <Tabs :model="tab_model"></Tabs>
       <div id="tab1" class="container is-fluid">
-        <h1 class="title">{{ t('title') }}</h1>
+        <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
             <AvatarUpload :avatar="avatar.images[avatar.selected]"></AvatarUpload>
@@ -106,37 +105,24 @@ import InputText from '@/components/InputText.vue';
 import SelectOptions from '@/components/SelectOptions.vue';
 import RadioOptions from '@/components/RadioOptions.vue';
 import Calendar from '@/components/Calendar.vue';
-import Toast from 'primevue/toast';
 
 //Validation part
 import { Form } from 'vee-validate';
 import * as Yup from "yup";
-// import { useI18n } from "vue-i18n";
-// import { setupI18n } from './i18n';
 
-// eslint-disable-next-line no-unused-vars
 import { restApi, fillArrayFromRest } from '@/configuration/rest.config';
 import patientDTO from '@/model/PatientDTO';
-
-import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'PatientForm',
   components: {
-    // eslint-disable-next-line vue/no-unused-components
     Tabs, 
     AvatarUpload, 
     InputText, 
     SelectOptions, 
     RadioOptions, 
     Calendar,
-    Form,
-    Toast
-  },
-  setup() {
-    const {t, locale} = useI18n();
-
-    return {t, locale};
+    Form
   },
   data() {
     const validationEntity = {
@@ -216,7 +202,6 @@ export default {
   },
   // our methods
   methods: {
-    // eslint-disable-next-line no-unused-vars
     onChangeMunicipality: function(event){
       this.postal_code_selected = null;
 
