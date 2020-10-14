@@ -20,23 +20,23 @@
                   placeHolder="Apellido del paciente" v-model="patient.lastName"></InputText>
               </div>
               <div class="column is-half">
-                <InputText id="patientIdentityDocument" label="(DNI) Documento nacional de identidad" 
+                <InputText id="identityDocument" label="(DNI) Documento nacional de identidad" 
                   placeHolder="Documento de identidad" v-model="patient.identityDocument"></InputText>
               </div>
               <div class="column is-half">
-                <InputText id="patientSanitaryDocument" label="Documento sanitario" 
+                <InputText id="sanitaryDocument" label="Documento sanitario" 
                   placeHolder="Documento sanitario" v-model="patient.sanitaryDocument"></InputText>
               </div>
               <div class="column is-half">
-                <RadioOptions id="patientSex" label="Sexo" item-key="id" item-value="description" 
+                <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
                   :items="sex_items" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
               </div>
               <div class="column is-half">
-                <SelectOptions id="patientBloodGroup" label="Grupo sanguíneo" item-key="id" item-value="description" 
+                <SelectOptions id="bloodGroupId" label="Grupo sanguíneo" item-key="id" item-value="description" 
                   :items="blood_groups_items" v-model="blood_group_selected"></SelectOptions>
               </div>
               <div class="column is-half">
-                <Calendar id="patientBirthDay" label="Fecha de nacimiento"
+                <Calendar id="birthDate" label="Fecha de nacimiento"
                   placeHolder="Fecha de nacimiento" v-model="patient.birthDate"></Calendar>
               </div>
               <div class="column is-half has-text-centered">
@@ -48,37 +48,37 @@
         <h1 class="title">Información de contacto</h1>
         <div class="columns is-multiline">
           <div class="column is-one-third">
-            <InputText id="patientMobilePhone" label="Teléfono móvil" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
+            <InputText id="mobilePhone" label="Teléfono móvil" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
               placeHolder="Móvil" v-model="patient.mobilePhone"></InputText>
           </div>
           <div class="column is-one-third">
-            <InputText id="patientHomePhone" label="Teléfono de casa" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
+            <InputText id="homePhone" label="Teléfono de casa" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
               placeHolder="Teléfono" v-model="patient.homePhone"></InputText>
           </div>
           <div class="column is-one-third">
-            <InputText id="patientEmail" label="Email" type="email"
+            <InputText id="email" label="Email" type="email"
               placeHolder="Correo electrónico" v-model="patient.email"></InputText>
           </div>
           <div class="column is-full">
-            <InputText id="patientAddress1" label="Dirección 1" 
+            <InputText id="addressLine1" label="Dirección 1" 
               placeHolder="Dirección 1" v-model="patient.addressLine1"></InputText>
           </div>
           <div class="column is-full">
-            <InputText id="patientAddress2" label="Dirección 2" 
+            <InputText id="addressLine2" label="Dirección 2" 
               placeHolder="Dirección 2" v-model="patient.addressLine2"></InputText>
           </div>
         </div>
         <div class="columns is-centered">
           <div class="column is-narrow">
-            <SelectOptions id="patientProvince" label="Provincia" item-key="id" item-value="description" 
+            <SelectOptions id="provinceId" label="Provincia" item-key="id" item-value="description" 
               :items="province_items" v-model="province_selected" @change="onChangeProvince($event)"></SelectOptions>
           </div>
           <div class="column is-narrow">
-            <SelectOptions id="patientMunicipality" label="Municipalidad" item-key="id" item-value="description" 
+            <SelectOptions id="municipalityId" label="Municipalidad" item-key="id" item-value="description" 
               :items="municipality_items" v-model="municipality_selected" @change="onChangeMunicipality($event)"></SelectOptions>
           </div>
           <div class="column is-narrow">
-            <SelectOptions id="patientPostalCode" label="Código postal" item-key="id" item-value="code" 
+            <SelectOptions id="postal_code_id" label="Código postal" item-key="id" item-value="code" 
               :items="postal_code_items" v-model="postal_code_selected"></SelectOptions>
           </div>
         </div>
@@ -226,23 +226,28 @@ export default {
 
       this.$toast.add({severity:'success', summary: 'Success Message', detail:'Order submitted', life: 3000});
 
-      console.log("PatientDTO:" + this.patient);
-      this.validationEntity.lastName = Yup.string().required('El apellido es requerido');
-      this.validationSchema = Yup.object().shape(this.validationEntity);
-      form.setFieldError('lastName', 'this email is already taken');
+      // console.log("PatientDTO:" + this.patient);
+      // this.validationEntity.lastName = Yup.string().nullable().required('El apellido es requerido');
+      // this.validationSchema = Yup.object().shape(this.validationEntity);
+      // form.setFieldError('lastName', 'this email is already taken');
 
       // this.$validator.validate("lastName");
       // this.validate();
 
-      this.validationSchema.validate(this.patient)
-      .then(() => {})
-      .catch((err) => {
-        console.log("error:" + err);
-      });
+      // this.validationSchema.validate(this.patient)
+      // .then(() => {})
+      // .catch((err) => {
+      //   console.log("error:" + err);
+      // });
 
-      restApi.post('/v1/patients', {
-        body: this.patient
-      })
+      // let self = this;
+
+      // validation
+      this.patient.provinceId = this.province_selected.id;
+      this.patient.municipalityId = this.municipality_selected.id;
+      this.patient.postalCodeId = this.postal_code_selected.id;
+
+      restApi.post('/v1/patients', this.patient)
       // eslint-disable-next-line no-unused-vars
       .then(response => {
         console.log("Respuesta:" + response);
@@ -252,7 +257,11 @@ export default {
 
         if(e.response.data.code == "5000"){
           console.log("Bean validation problem");
-          // this.validationEntity.lastName = Yup.string().required('El apellido es requerido');
+
+          // eslint-disable-next-line no-unused-vars
+          Object.entries(e.response.data.field_errors).forEach(item => { 
+            form.setFieldError(item[1].field, item[1].message);
+          });
         }
       });
     },

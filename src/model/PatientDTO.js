@@ -13,7 +13,7 @@ const patientDTO = {
     addressLine2: null,
     provinceId: 0,
     municipalityId: 0,
-    postalCodeId: 0,
+    postal_code_id: 0,
     birthDate: null,
     sexId: null,
     bloodGroupId: 0,
