@@ -1,13 +1,21 @@
 import axios from 'axios';
+import applyCaseMiddleware from 'axios-case-converter';
 
 export function init(baseUrl) {
-  restApi = axios.create({
+  restApi = applyCaseMiddleware(axios.create({
     baseURL: baseUrl,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     }
-  });
+  }));
+  // restApi = axios.create({
+  //   baseURL: baseUrl,
+  //   headers: {
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //   }
+  // });
   
   restApi.interceptors.request.use(req => {
     req.headers.Authorization = `Bearer ${sessionStorage.access_token}`;
