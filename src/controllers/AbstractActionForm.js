@@ -72,7 +72,11 @@ class AbstractActionForm {
 			console.log('Executing validate() on delete');
 
 			return;
-		}
+        }
+        
+        for (let key in entity) {
+            console.log("typeof " + key + ":" + typeof entity[key]);
+        }
     }
 
     persistEntity(entity) {

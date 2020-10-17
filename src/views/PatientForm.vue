@@ -225,72 +225,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     onSubmit(values, { form }) {
-      // if(event) {
-      //   event.preventDefault();
-      // }
-
-      // console.log("PatientDTO:" + this.patient);
-      // this.validationEntity.lastName = Yup.string().nullable().required('El apellido es requerido');
-      // this.validationSchema = Yup.object().shape(this.validationEntity);
-      // form.setFieldError('lastName', 'this email is already taken');
-
-      // this.$validator.validate("lastName");
-      // this.validate();
-
-      // this.validationSchema.validate(this.patient)
-      // .then(() => {})
-      // .catch((err) => {
-      //   console.log("error:" + err);
-      // });
-
-      // let self = this;
-
-      // pre-set values in pojo
-      // this.patient.provinceId = this.province_selected ? this.province_selected.id : null;
-      // this.patient.municipalityId = this.municipality_selected ? this.municipality_selected.id : null;
-      // this.patient.postalCodeId = this.postal_code_selected ? this.postal_code_selected.id : null;
-      // this.patient.bloodGroupId = this.blood_group_selected ? this.blood_group_selected.id : null;
-
-      // this.$toast.add({severity:'success', summary: 'Salvado', detail:'Testing toast is working', life: 3000});
-
       this.patientFormController.save(this.patient, this, form);
-      // saveCall();
-
-      // if(this.patient.id == null) {
-      //   restApi.post('/v1/patients', this.patient)
-      //   // eslint-disable-next-line no-unused-vars
-      //   .then(response => {
-      //     this.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
-
-      //     this.patient = response.data;
-      //   })
-      //   .catch(e => {
-      //     this.$toast.add({severity:'error', summary: 'Problemas al salvar', detail:e.response.data.messageKey, life: 3000});
-
-      //     if(e.response.data.code == "5000"){
-      //       Object.entries(e.response.data.fieldErrors).forEach(item => { 
-      //         form.setFieldError(item[1].field, item[1].message);
-      //       });
-      //     }
-      //   });
-      // } else {
-      //   restApi.patch(`/v1/patients/${this.patient.id}`, this.patient)
-      //   // eslint-disable-next-line no-unused-vars
-      //   .then(response => {
-      //     this.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actaulizado correctamente', life: 3000});
-
-      //     this.patient = response.data;
-      //   })
-      //   .catch(e => {
-      //     this.$toast.add({severity:'error', summary: 'Problemas al actualizar', detail:e.response.data.messageKey, life: 3000});
-
-      //     if(e.response.data.code == "5000"){
-      //       Object.entries(e.response.data.fieldErrors).forEach(item => { 
-      //         form.setFieldError(item[1].field, item[1].message);
-      //       });
-      //     }
-      //   });
-      // }
     },
     getSexItems: function() {
       fillArrayFromRest('/v1/simple/sex', this, 'sex_items');
