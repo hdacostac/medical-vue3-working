@@ -14,10 +14,12 @@ class AbstractActionForm {
         this.doValidation = doValidation;
     }
 
-    save(entity) {
+    save(entity, vueContext, form) {
         console.log('Executing save');
 
-        // eslint-disable-next-line no-unused-vars
+        this.ctx = vueContext;
+        this.form = form;
+
         this.currentVersion = this.getCurrentVersion(entity);
 
         this.validateEntity(entity);
@@ -38,27 +40,35 @@ class AbstractActionForm {
     validateEntity(entity) {
         if(this.doValidation) {
             if(this.checkIfPersisted(entity)){
-                this.validate(entity, this.VALIDATING_ON_INSERT);
+                this.validate(entity, AbstractActionForm.VALIDATING_ON_UPDATE);
             } else {
-                this.validate(entity, this.VALIDATING_ON_UPDATE);
+                this.validate(entity, AbstractActionForm.VALIDATING_ON_INSERT);
             }
         }
     }
 
     checkIfPersisted(entity) {
-        return this.getKeyForEntity(entity) != null;
+        let retValue = this.getKeyForEntity(entity) != null;
+
+        console.log('Value of checkIfPersisted:' + retValue);
+
+        return retValue;
     }
 
     getKeyForEntity(entity) {
-        return 'id' in entity ? entity.id : null;
+        let retValue = 'id' in entity ? entity.id : null;
+
+        console.log('Value of getKeyForEntity:' + retValue);
+
+        return retValue;
     }
 
     validate(entity, validatingOnAction) {
-        if (validatingOnAction == this.VALIDATING_ON_INSERT) {
+        if (validatingOnAction == AbstractActionForm.VALIDATING_ON_INSERT) {
 			console.log('Executing validate() on insert');
-		} else if (validatingOnAction == this.VALIDATING_ON_UPDATE) {
+		} else if (validatingOnAction == AbstractActionForm.VALIDATING_ON_UPDATE) {
 			console.log('Executing validate() on update');
-		} else if (validatingOnAction == this.VALIDATING_ON_DELETE) {
+		} else if (validatingOnAction == AbstractActionForm.VALIDATING_ON_DELETE) {
 			console.log('Executing validate() on delete');
 
 			return;
@@ -66,66 +76,72 @@ class AbstractActionForm {
     }
 
     persistEntity(entity) {
-        console.log('Trying to persist entity:' + entity);
+        console.log('Trying to persist entity:' + entity.id);
 
         if(this.checkIfPersisted(entity)) {
             this.updateObjectMethod(entity);
-            // this.onSuccessUpdate();
         } else {
             this.saveObjectMethod(entity);
-            // this.onSuccessSave();
         }
-    }
-
-    updateObjectMethod(entity) {
-        console.log('Executing method updateObjectMethod:' + entity.id);
-
-        restApi.patch(`${this.patchUrl}/${entity.id}`, entity)
-        // eslint-disable-next-line no-unused-vars
-        .then(response => {
-          this.onSuccessUpdate();
-        })
-        .catch(e => {
-          this.$toast.add({severity:'error', summary: 'Problemas al actualizar', detail:e.response.data.messageKey, life: 3000});
-
-          this.handleExceptions(e, entity);
-
-          this.revertEntityPreviousState(entity, this.currentVersion);
-        });
     }
 
     saveObjectMethod(entity) {
         console.log('Executing method saveObjectMethod:' + entity);
 
         restApi.post(this.postUrl, entity)
-        // eslint-disable-next-line no-unused-vars
         .then(response => {
-          this.onSuccessSave();
+            Object.assign(entity, response.data);
+
+            this.onSuccessSave();
         })
         .catch(e => {
-          this.$toast.add({severity:'error', summary: 'Problemas al salvar', detail:e.response.data.messageKey, life: 3000});
+            this.ctx.$toast.add({severity:'error', summary: 'Problemas al salvar', detail:e.response.data.messageKey, life: 3000});
 
-          this.handleExceptions(e, entity);
+            this.handleExceptions(entity, e);
 
-          this.revertEntityPreviousState(entity, this.currentVersion);
+            this.revertEntityPreviousState(entity, this.currentVersion);
+        });
+    }
+
+    updateObjectMethod(entity) {
+        console.log('Executing method updateObjectMethod:' + entity.id);
+
+        restApi.patch(`${this.patchUrl}/${entity.id}`, entity)
+        .then(response => {
+            Object.assign(entity, response.data);
+
+            this.onSuccessUpdate();
+        })
+        .catch(e => {
+            this.ctx.$toast.add({severity:'error', summary: 'Problemas al actualizar', detail:e.response.data.messageKey, life: 3000});
+
+            this.handleExceptions(entity, e);
+
+            this.revertEntityPreviousState(entity, this.currentVersion);
         });
     }
 
     // eslint-disable-next-line no-unused-vars
-    handleExceptions(e, entity) {
+    handleExceptions(entity, e) {
         console.log('Handling exceptions');
+
+        if(e.response.data.code == "5000"){
+            Object.entries(e.response.data.fieldErrors).forEach(item => { 
+                this.form.setFieldError(item[1].field, item[1].message);
+            });
+        }
     }
 
     onSuccessSave() {
         console.log('Executing method onSuccessSave()');
 
-		this.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
+		this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
     }
 
     onSuccessUpdate() {
 		console.log('Executing method onSuccessUpdate()');
 
-		this.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
+		this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
     }
 
     revertEntityPreviousState(entity, currentVersion) {

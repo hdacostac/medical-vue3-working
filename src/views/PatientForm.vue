@@ -106,7 +106,7 @@ import SelectOptions from '@/components/SelectOptions.vue';
 import RadioOptions from '@/components/RadioOptions.vue';
 import Calendar from '@/components/Calendar.vue';
 
-//Validation part
+// Validation part
 import { Form } from 'vee-validate';
 import * as Yup from "yup";
 
@@ -246,14 +246,15 @@ export default {
       // let self = this;
 
       // pre-set values in pojo
-      this.patient.provinceId = this.province_selected ? this.province_selected.id : null;
-      this.patient.municipalityId = this.municipality_selected ? this.municipality_selected.id : null;
-      this.patient.postalCodeId = this.postal_code_selected ? this.postal_code_selected.id : null;
-      this.patient.bloodGroupId = this.blood_group_selected ? this.blood_group_selected.id : null;
+      // this.patient.provinceId = this.province_selected ? this.province_selected.id : null;
+      // this.patient.municipalityId = this.municipality_selected ? this.municipality_selected.id : null;
+      // this.patient.postalCodeId = this.postal_code_selected ? this.postal_code_selected.id : null;
+      // this.patient.bloodGroupId = this.blood_group_selected ? this.blood_group_selected.id : null;
 
-      this.$toast.add({severity:'success', summary: 'Salvado', detail:'Testing toast is working', life: 3000});
+      // this.$toast.add({severity:'success', summary: 'Salvado', detail:'Testing toast is working', life: 3000});
 
-      this.patientFormController.save(this.patient);
+      this.patientFormController.save(this.patient, this, form);
+      // saveCall();
 
       // if(this.patient.id == null) {
       //   restApi.post('/v1/patients', this.patient)
