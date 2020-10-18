@@ -73,9 +73,23 @@ class AbstractActionForm {
 
 			return;
         }
+
+        let formValues = this.form.values;
         
-        for (let key in entity) {
-            console.log("typeof " + key + ":" + typeof entity[key]);
+        for (let key in formValues) {
+            console.log("typeof " + key + ":" + typeof formValues[key]);
+
+            if(typeof formValues[key] === "string") {
+                if(formValues[key] == '' || formValues[key] == null){
+                    console.log("\tSetting " + key + " to null");
+
+                    this.form.setFieldValue(key, null);
+
+                    if(key in entity) { 
+                        entity[key] = '@@DELETE';
+                    }
+                }
+            }
         }
     }
 
@@ -96,6 +110,8 @@ class AbstractActionForm {
         .then(response => {
             Object.assign(entity, response.data);
 
+            this.setValuesToForm(entity);
+
             this.onSuccessSave();
         })
         .catch(e => {
@@ -113,6 +129,8 @@ class AbstractActionForm {
         restApi.patch(`${this.patchUrl}/${entity.id}`, entity)
         .then(response => {
             Object.assign(entity, response.data);
+
+            this.setValuesToForm(entity);
 
             this.onSuccessUpdate();
         })
@@ -143,9 +161,15 @@ class AbstractActionForm {
     }
 
     onSuccessUpdate() {
-		console.log('Executing method onSuccessUpdate()');
+        console.log('Executing method onSuccessUpdate()');
 
 		this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
+    }
+
+    setValuesToForm(entity) {
+        for (let key in entity) {
+            this.form.setFieldValue(key, entity[key]);
+        }
     }
 
     revertEntityPreviousState(entity, currentVersion) {

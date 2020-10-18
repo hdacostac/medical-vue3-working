@@ -4,7 +4,7 @@
     <Form @submit="onSubmit" :validation-schema="validationSchema">
       <Tabs :model="tab_model"></Tabs>
       <div id="tab1" class="container is-fluid">
-        <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }}</h1>
+        <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
             <AvatarUpload :avatar="avatar.images[avatar.selected]"></AvatarUpload>
@@ -13,19 +13,19 @@
             <div class="columns is-multiline">
               <div class="column is-half">
                 <InputText id="name" label="Nombres" 
-                  placeHolder="Nombre del paciente" v-model="patient.name"></InputText>
+                  placeHolder="Nombre del paciente" v-model.trim="patient.name"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="lastName" label="Apellidos" 
-                  placeHolder="Apellido del paciente" v-model="patient.lastName"></InputText>
+                  placeHolder="Apellido del paciente" v-model.trim="patient.lastName"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="identityDocument" label="(DNI) Documento nacional de identidad" 
-                  placeHolder="Documento de identidad" v-model="patient.identityDocument"></InputText>
+                  placeHolder="Documento de identidad" v-model.trim="patient.identityDocument"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="sanitaryDocument" label="Documento sanitario" 
-                  placeHolder="Documento sanitario" v-model="patient.sanitaryDocument"></InputText>
+                  placeHolder="Documento sanitario" v-model.trim="patient.sanitaryDocument"></InputText>
               </div>
               <div class="column is-half">
                 <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
@@ -49,23 +49,23 @@
         <div class="columns is-multiline">
           <div class="column is-one-third">
             <InputText id="mobilePhone" label="Teléfono móvil" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Móvil" v-model="patient.mobilePhone"></InputText>
+              placeHolder="Móvil" v-model.trim="patient.mobilePhone"></InputText>
           </div>
           <div class="column is-one-third">
             <InputText id="homePhone" label="Teléfono de casa" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Teléfono" v-model="patient.homePhone"></InputText>
+              placeHolder="Teléfono" v-model.trim="patient.homePhone"></InputText>
           </div>
           <div class="column is-one-third">
             <InputText id="email" label="Email" type="email"
-              placeHolder="Correo electrónico" v-model="patient.email"></InputText>
+              placeHolder="Correo electrónico" v-model.trim="patient.email"></InputText>
           </div>
           <div class="column is-full">
             <InputText id="addressLine1" label="Dirección 1" 
-              placeHolder="Dirección 1" v-model="patient.addressLine1"></InputText>
+              placeHolder="Dirección 1" v-model.trim="patient.addressLine1"></InputText>
           </div>
           <div class="column is-full">
             <InputText id="addressLine2" label="Dirección 2" 
-              placeHolder="Dirección 2" v-model="patient.addressLine2"></InputText>
+              placeHolder="Dirección 2" v-model.trim="patient.addressLine2"></InputText>
           </div>
         </div>
         <div class="columns is-centered">
@@ -224,7 +224,17 @@ export default {
       this.avatar.selected = event;
     },
     // eslint-disable-next-line no-unused-vars
-    onSubmit(values, { form }) {
+    onSubmit: function(values, { form }) {
+      // this.patient.sanitaryDocument = "Puesto a proposito";
+      // form.setFieldValue('sanitaryDocument', 'ummm@example.com');
+      // $vm.data.patient.sanitaryDocument = "Hola";
+
+      // this.$nextTick(function() {
+      //   // console.log(this.$el.textContent) // => 'updated'
+      // })
+
+      // this.$forceUpdate();
+
       this.patientFormController.save(this.patient, this, form);
     },
     getSexItems: function() {
