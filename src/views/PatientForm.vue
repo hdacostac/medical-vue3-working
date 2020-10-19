@@ -13,19 +13,19 @@
             <div class="columns is-multiline">
               <div class="column is-half">
                 <InputText id="name" label="Nombres" 
-                  placeHolder="Nombre del paciente" v-model.trim="patient.name"></InputText>
+                  placeHolder="Nombre del paciente" v-model="patient.name"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="lastName" label="Apellidos" 
-                  placeHolder="Apellido del paciente" v-model.trim="patient.lastName"></InputText>
+                  placeHolder="Apellido del paciente" v-model="patient.lastName"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="identityDocument" label="(DNI) Documento nacional de identidad" 
-                  placeHolder="Documento de identidad" v-model.trim="patient.identityDocument"></InputText>
+                  placeHolder="Documento de identidad" v-model="patient.identityDocument"></InputText>
               </div>
               <div class="column is-half">
                 <InputText id="sanitaryDocument" label="Documento sanitario" 
-                  placeHolder="Documento sanitario" v-model.trim="patient.sanitaryDocument"></InputText>
+                  placeHolder="Documento sanitario" v-model="patient.sanitaryDocument"></InputText>
               </div>
               <div class="column is-half">
                 <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
@@ -49,23 +49,23 @@
         <div class="columns is-multiline">
           <div class="column is-one-third">
             <InputText id="mobilePhone" label="Teléfono móvil" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Móvil" v-model.trim="patient.mobilePhone"></InputText>
+              placeHolder="Móvil" v-model="patient.mobilePhone"></InputText>
           </div>
           <div class="column is-one-third">
             <InputText id="homePhone" label="Teléfono de casa" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Teléfono" v-model.trim="patient.homePhone"></InputText>
+              placeHolder="Teléfono" v-model="patient.homePhone"></InputText>
           </div>
           <div class="column is-one-third">
             <InputText id="email" label="Email" type="email"
-              placeHolder="Correo electrónico" v-model.trim="patient.email"></InputText>
+              placeHolder="Correo electrónico" v-model="patient.email"></InputText>
           </div>
           <div class="column is-full">
             <InputText id="addressLine1" label="Dirección 1" 
-              placeHolder="Dirección 1" v-model.trim="patient.addressLine1"></InputText>
+              placeHolder="Dirección 1" v-model="patient.addressLine1"></InputText>
           </div>
           <div class="column is-full">
             <InputText id="addressLine2" label="Dirección 2" 
-              placeHolder="Dirección 2" v-model.trim="patient.addressLine2"></InputText>
+              placeHolder="Dirección 2" v-model="patient.addressLine2"></InputText>
           </div>
         </div>
         <div class="columns is-centered">
@@ -225,16 +225,6 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     onSubmit: function(values, { form }) {
-      // this.patient.sanitaryDocument = "Puesto a proposito";
-      // form.setFieldValue('sanitaryDocument', 'ummm@example.com');
-      // $vm.data.patient.sanitaryDocument = "Hola";
-
-      // this.$nextTick(function() {
-      //   // console.log(this.$el.textContent) // => 'updated'
-      // })
-
-      // this.$forceUpdate();
-
       this.patientFormController.save(this.patient, this, form);
     },
     getSexItems: function() {

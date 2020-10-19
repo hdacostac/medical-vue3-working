@@ -74,6 +74,10 @@ class AbstractActionForm {
 			return;
         }
 
+        this.setEntityFieldsToDelete(entity);
+    }
+
+    setEntityFieldsToDelete(entity) {
         let formValues = this.form.values;
         
         for (let key in formValues) {
@@ -148,6 +152,8 @@ class AbstractActionForm {
         console.log('Handling exceptions');
 
         if(e.response.data.code == "5000"){
+            console.log('\tHandling exceptions from error code 5000');
+
             Object.entries(e.response.data.fieldErrors).forEach(item => { 
                 this.form.setFieldError(item[1].field, item[1].message);
             });
@@ -167,17 +173,29 @@ class AbstractActionForm {
     }
 
     setValuesToForm(entity) {
+        console.log('Setting values from entity into form');
+
         for (let key in entity) {
+            if(entity[key] === '@@DELETE') {
+                entity[key] = null;
+            }
+
             this.form.setFieldValue(key, entity[key]);
         }
     }
 
     revertEntityPreviousState(entity, currentVersion) {
+        console.log('Reverting state to previous state');
+
         if(this.checkIfPersisted(entity)) {
             if('version' in entity) {
                 entity.version = currentVersion;
+
+                console.log('\tReverting to version:' + entity.version);
             }
         } else {
+            console.log('\tCleaning entity into a fresh one');
+
             if('id' in entity) {
                 entity.id = null;
             }

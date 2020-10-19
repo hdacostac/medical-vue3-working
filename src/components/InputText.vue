@@ -40,6 +40,10 @@ export default {
       },
       placeHolder: {
          type: String
+      },
+      trim: {
+         type: Boolean,
+         default: true
       }
    },
    computed: {
@@ -48,7 +52,7 @@ export default {
             return this.modelValue
          },
          set(value) {
-            this.$emit('update:modelValue', value)
+            this.$emit('update:modelValue', this.trim ? value.trim() : value)
          }
       }
    }
