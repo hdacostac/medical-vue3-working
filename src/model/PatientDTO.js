@@ -20,4 +20,4 @@ const patientDTO = {
     version: null
 }
 
-export default patientDTO;
+export default Object.seal(patientDTO);

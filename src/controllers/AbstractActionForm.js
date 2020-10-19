@@ -112,7 +112,7 @@ class AbstractActionForm {
 
         restApi.post(this.postUrl, entity)
         .then(response => {
-            Object.assign(entity, response.data);
+            this.mergeEntities(entity, response.data);
 
             this.setValuesToForm(entity);
 
@@ -132,7 +132,7 @@ class AbstractActionForm {
 
         restApi.patch(`${this.patchUrl}/${entity.id}`, entity)
         .then(response => {
-            Object.assign(entity, response.data);
+            this.mergeEntities(entity, response.data);
 
             this.setValuesToForm(entity);
 
@@ -145,6 +145,16 @@ class AbstractActionForm {
 
             this.revertEntityPreviousState(entity, this.currentVersion);
         });
+    }
+
+    mergeEntities(entityInForm, entityInResponse) {
+        // Object.assign(entityInForm, entityInResponse);
+
+        for (let key in entityInForm) {
+            if (key in entityInResponse) { // or obj1.hasOwnProperty(key)
+                entityInForm[key] = entityInResponse[key];
+            }
+        }
     }
 
     // eslint-disable-next-line no-unused-vars
