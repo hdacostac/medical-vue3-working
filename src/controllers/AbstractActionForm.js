@@ -19,14 +19,24 @@ class AbstractActionForm {
 
         this.ctx = vueContext;
         this.form = form;
+        
+        try {
+            this.setSubmittingFlag(true);
+            // this.ctx.isSubmitting = true;
 
-        this.currentVersion = this.getCurrentVersion(entity);
+            this.currentVersion = this.getCurrentVersion(entity);
 
-        this.validateEntity(entity);
+            this.validateEntity(entity);
 
-        this.persistEntity(entity);
+            this.persistEntity(entity);
 
-        this.doValidation = true;
+            this.doValidation = true;
+        } catch(e) {
+            console.log('Exception on global:' + e);
+
+            this.setSubmittingFlag(false);
+            // this.ctx.isSubmitting = false;
+        }
     }
 
     getCurrentVersion(entity) {
@@ -84,7 +94,7 @@ class AbstractActionForm {
             console.log("typeof " + key + ":" + typeof formValues[key]);
 
             if(typeof formValues[key] === "string") {
-                if(formValues[key] == '' || formValues[key] == null){
+                if(formValues[key].trim() == '' || formValues[key] == null){
                     console.log("\tSetting " + key + " to null");
 
                     this.form.setFieldValue(key, null);
@@ -119,6 +129,8 @@ class AbstractActionForm {
             this.onSuccessSave();
         })
         .catch(e => {
+            console.log('Exception on save:' + e);
+
             this.ctx.$toast.add({severity:'error', summary: 'Problemas al salvar', detail:e.response.data.messageKey, life: 3000});
 
             this.handleExceptions(entity, e);
@@ -139,6 +151,8 @@ class AbstractActionForm {
             this.onSuccessUpdate();
         })
         .catch(e => {
+            console.log('Exception on update:' + e);
+
             this.ctx.$toast.add({severity:'error', summary: 'Problemas al actualizar', detail:e.response.data.messageKey, life: 3000});
 
             this.handleExceptions(entity, e);
@@ -168,28 +182,39 @@ class AbstractActionForm {
                 this.form.setFieldError(item[1].field, item[1].message);
             });
         }
+
+        this.setSubmittingFlag(false);
+        // this.ctx.isSubmitting = false;
     }
 
     onSuccessSave() {
         console.log('Executing method onSuccessSave()');
 
-		this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
+        this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
+        
+        this.setSubmittingFlag(false);
+        // this.ctx.isSubmitting = false;
     }
 
     onSuccessUpdate() {
         console.log('Executing method onSuccessUpdate()');
 
-		this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
+        this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
+        
+        this.setSubmittingFlag(false);
+        // this.ctx.isSubmitting = false;
     }
 
     setValuesToForm(entity) {
         console.log('Setting values from entity into form');
 
         for (let key in entity) {
-            if(entity[key] === '@@DELETE') {
+            if(entity[key] === '@@DELETE') { // Put as a const
                 entity[key] = null;
             }
 
+            this.form.setFieldDirty(key, false);
+            this.form.setFieldTouched(key, false);
             this.form.setFieldValue(key, entity[key]);
         }
     }
@@ -213,6 +238,16 @@ class AbstractActionForm {
             if('version' in entity) {
                 entity.version = 0;
             }
+        }
+    }
+
+    setSubmittingFlag(value) {
+        if(this.ctx && ('isSubmitting' in this.ctx)) {
+            console.log("Setting flag isSubmitting")
+
+            this.ctx.isSubmitting = value;
+        } else {
+            console.log("The flag isSubmitting is not present");
         }
     }
 }

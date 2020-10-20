@@ -1,7 +1,7 @@
 /* eslint-disable vue/no-deprecated-slot-attribute */
 <template>
   <div>
-    <Form @submit="onSubmit" :validation-schema="validationSchema">
+    <Form @submit="onSubmit" :validation-schema="validationSchema" v-slot="{ meta }">
       <Tabs :model="tab_model"></Tabs>
       <div id="tab1" class="container is-fluid">
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
@@ -89,7 +89,8 @@
       <div class="section">
         <PrimeToolbar>
           <template v-slot:right>
-            <PrimeButton label="Salvar" icon="pi pi-check" iconPos="right" type="submit" />
+            Formulario tocado:{{ meta.touched}} Formulario manipulado {{ meta.dirty }}
+            <PrimeButton label="Salvar" :icon="saveIcon" iconPos="right" type="submit" :disabled="isSubmitting" />
           </template>
         </PrimeToolbar>
       </div>
@@ -169,7 +170,8 @@ export default {
           src: require('@/assets/images/female_photo_placeholder.png')
         }],
         selected: 0
-      }
+      },
+      isSubmitting: false
     }
   },
   mounted() {
@@ -180,6 +182,9 @@ export default {
     this.getProvinceItems();
   },
   computed: {
+    saveIcon: function() {
+      return this.isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check';
+    },
     calculateAge: function () {
       if(this.patient.birthDate == null) {
         return 'Ingrese una fecha de nacimiento para calcular la edad';
@@ -231,9 +236,7 @@ export default {
       fillArrayFromRest('/v1/simple/sex', this, 'sex_items');
     },
     getBloodGroupsItems: function() {
-      fillArrayFromRest('/v1/simple/bloodGroups', this, 'blood_groups_items', null, () => {
-        this.blood_groups_items.unshift({id: 0, description: "Desconocido"});
-      });
+      fillArrayFromRest('/v1/simple/bloodGroups', this, 'blood_groups_items');
     },
     getProvinceItems: function() {
       fillArrayFromRest('/v1/simple/provinces', this, 'province_items');
