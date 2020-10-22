@@ -24,6 +24,9 @@
                   <div class="navbar-item">
                      <div class="field is-grouped">
                         <p class="control">
+                           <Locale />
+                        </p>
+                        <p class="control">
                            <a class="button is-small">
                              <span class="icon"><i class="fa fa-user-plus"></i></span>
                              <span>Register</span>
@@ -107,12 +110,14 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 
+import Locale from '@/components/Locale.vue'
 import Toast from 'primevue/toast';
 
 export default {
   name: "MainLayout",
   components: {
-    Toast
+      Locale,
+      Toast
   },
 };
 </script>

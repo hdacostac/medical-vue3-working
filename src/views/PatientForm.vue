@@ -2,7 +2,7 @@
 <template>
   <div>
     <Form @submit="onSubmit" :validation-schema="validationSchema" v-slot="{ meta }">
-      <Tabs :model="tab_model"></Tabs>
+      <Tabs :model="tabModel"></Tabs>
       <div id="tab1" class="container is-fluid">
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
         <div class="columns">
@@ -29,11 +29,11 @@
               </div>
               <div class="column is-half">
                 <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
-                  :items="sex_items" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
+                  :items="sexItems" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
               </div>
               <div class="column is-half">
                 <SelectOptions id="bloodGroupId" label="Grupo sanguíneo" item-key="id" item-value="description" 
-                  :items="blood_groups_items" v-model="blood_group_selected"></SelectOptions>
+                  :items="bloodGroupsItems" v-model="bloodGroupSelected"></SelectOptions>
               </div>
               <div class="column is-half">
                 <Calendar id="birthDate" label="Fecha de nacimiento"
@@ -71,15 +71,15 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <SelectOptions id="provinceId" label="Provincia" item-key="id" item-value="description" 
-              :items="province_items" v-model="province_selected" @change="onChangeProvince($event)"></SelectOptions>
+              :items="provinceItems" v-model="provinceSelected" @change="onChangeProvince($event)"></SelectOptions>
           </div>
           <div class="column is-narrow">
             <SelectOptions id="municipalityId" label="Municipalidad" item-key="id" item-value="description" 
-              :items="municipality_items" v-model="municipality_selected" @change="onChangeMunicipality($event)"></SelectOptions>
+              :items="municipalityItems" v-model="municipalitySelected" @change="onChangeMunicipality($event)"></SelectOptions>
           </div>
           <div class="column is-narrow">
             <SelectOptions id="postalCodeId" label="Código postal" item-key="id" item-value="code" 
-              :items="postal_code_items" v-model="postal_code_selected"></SelectOptions>
+              :items="postalCodeItems" v-model="postalCodeSelected"></SelectOptions>
           </div>
         </div>
       </div>
@@ -99,6 +99,8 @@
 </template>
 
 <script>
+import { markRaw } from 'vue';
+
 // @ is an alias to /src
 import Tabs from '@/components/Tabs.vue';
 import AvatarUpload from '@/components/AvatarUpload.vue';
@@ -128,32 +130,37 @@ export default {
     Calendar,
     Form
   },
-  data() {
+  setup() {
     const validationEntity = {
       name: Yup.string().required().label('Nombres')
     };
 
-    const validationSchema = Yup.object().shape(validationEntity);
-    
+    const validationSchema = markRaw(Yup.object().shape(validationEntity));
+
     return {
-      patient: patientDTO,
       validationEntity,
       validationSchema,
-      sex_items: [{id: 1, description: "Loading data..."}],
-      blood_group_selected: null,
-      blood_groups_items: [{id: 1, description: "Loading data..."}],
-      province_selected: null,
-      province_items: [{id: 1, description: "Loading data..."}],
-      municipality_selected: null,
-      municipality_items: [{id: 1, description: "Loading data..."}],
-      postal_code_selected: null,
-      postal_code_items: [{id: 1, code: "Loading data..."}],
-      tab_model: [{
-        tab_id: 'tab1',
+    }
+  },
+  data() {
+    return {
+      patient: patientDTO,
+      
+      sexItems: [{id: 1, description: "Loading data..."}],
+      bloodGroupSelected: null,
+      bloodGroupsItems: [{id: 1, description: "Loading data..."}],
+      provinceSelected: null,
+      provinceItems: [{id: 1, description: "Loading data..."}],
+      municipalitySelected: null,
+      municipalityItems: [{id: 1, description: "Loading data..."}],
+      postalCodeSelected: null,
+      postalCodeItems: [{id: 1, code: "Loading data..."}],
+      tabModel: [{
+        tabId: 'tab1',
         title: 'Datos principales',
-        is_active: true
+        isActive: true
       },{
-        tab_id: 'tab2',
+        tabId: 'tab2',
         title: 'Antecedentes',
       }],
       avatar: {
@@ -213,15 +220,15 @@ export default {
   // our methods
   methods: {
     onChangeMunicipality: function(event){
-      this.postal_code_selected = null;
+      this.postalCodeSelected = null;
 
-      this.getPostalCodeItems(this.province_selected.id, event.value.id);
+      this.getPostalCodeItems(this.provinceSelected.id, event.value.id);
     },
     onChangeProvince: function(event){
-      this.postal_code_items = [];
+      this.postalCodeItems = [];
 
-      this.municipality_selected = null;
-      this.postal_code_selected = null;
+      this.municipalitySelected = null;
+      this.postalCodeSelected = null;
 
       this.getMunicipalityItems(event.value.id);
     },
@@ -233,20 +240,20 @@ export default {
       this.patientFormController.save(this.patient, this, form);
     },
     getSexItems: function() {
-      fillArrayFromRest('/v1/simple/sex', this, 'sex_items');
+      fillArrayFromRest('/v1/simple/sex', this, 'sexItems');
     },
     getBloodGroupsItems: function() {
-      fillArrayFromRest('/v1/simple/bloodGroups', this, 'blood_groups_items');
+      fillArrayFromRest('/v1/simple/bloodGroups', this, 'bloodGroupsItems');
     },
     getProvinceItems: function() {
-      fillArrayFromRest('/v1/simple/provinces', this, 'province_items');
+      fillArrayFromRest('/v1/simple/provinces', this, 'provinceItems');
     },
     getMunicipalityItems: function(provinceId) {
       let queryParams = {
         province_id: provinceId
       }
 
-      fillArrayFromRest('/v1/simple/municipalities', this, 'municipality_items', queryParams);
+      fillArrayFromRest('/v1/simple/municipalities', this, 'municipalityItems', queryParams);
     },
     getPostalCodeItems: function(provinceId, municipalityId) {
       let queryParams = {
@@ -254,9 +261,9 @@ export default {
         municipality_id: municipalityId
       }
 
-      fillArrayFromRest('/v1/simple/postal-codes', this, 'postal_code_items', queryParams, () => {
-        if (this.postal_code_items.length == 1) {
-          this.postal_code_selected = this.postal_code_items[0];
+      fillArrayFromRest('/v1/simple/postal-codes', this, 'postalCodeItems', queryParams, () => {
+        if (this.postalCodeItems.length == 1) {
+          this.postalCodeSelected = this.postalCodeItems[0];
         }
       });
     }

@@ -1,8 +1,8 @@
 <template>
    <div class="tabs">
       <ul>
-         <li v-for='tab in model' :key='tab.tab_id' :class="{'is-active': tab.is_active}">
-            <a @click.prevent="selectTab(tab.tab_id)">{{ tab.title }}</a>
+         <li v-for='tab in model' :key='tab.tabId' :class="{'is-active': tab.isActive}">
+            <a @click.prevent="selectTab(tab.tabId)">{{ tab.title }}</a>
          </li>
       </ul>
    </div>
@@ -16,22 +16,22 @@ export default {
    },
    mounted() {
       this.model.forEach(tab => {
-         let tabElement = document.querySelector("#" + tab.tab_id);
+         let tabElement = document.querySelector("#" + tab.tabId);
 
-         tab.is_active ? tabElement.style.display = "block" : tabElement.style.display = "none";
+         tab.isActive ? tabElement.style.display = "block" : tabElement.style.display = "none";
       });
    },
    methods: {
       selectTab: function(tabSelectedId) {
          this.model.forEach(tab => {
-            let tabElement = document.querySelector("#" + tab.tab_id);
+            let tabElement = document.querySelector("#" + tab.tabId);
 
-            if(tab.tab_id === tabSelectedId){
+            if(tab.tabId === tabSelectedId){
                tabElement.style.display = "block";
-               tab.is_active = true;
+               tab.isActive = true;
             } else {
                tabElement.style.display = "none";
-               tab.is_active = false;
+               tab.isActive = false;
             }
          });
       }
