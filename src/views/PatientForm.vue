@@ -145,7 +145,6 @@ export default {
   data() {
     return {
       patient: patientDTO,
-      
       sexItems: [{id: 1, description: "Loading data..."}],
       bloodGroupSelected: null,
       bloodGroupsItems: [{id: 1, description: "Loading data..."}],

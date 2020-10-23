@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import oauthClient from '@/configuration/oauth.config.js';
 
-import SimplestLayout from '../layouts/SimplestLayout.vue';
-import MainLayout from '../layouts/MainLayout.vue';
+// import SimplestLayout from '../layouts/SimplestLayout.vue';
+// import MainLayout from '../layouts/MainLayout.vue';
+import MainLayoutApollo from '../layouts/MainLayoutApollo.vue';
 
 // import Home from '../views/Home.vue';
 import PatientForm from '../views/PatientForm.vue';
@@ -12,7 +13,7 @@ const routes = [
     path: '/',
     name: 'PatientForm',
     component: PatientForm,
-    meta: { layout: MainLayout }
+    meta: { layout: MainLayoutApollo }
   },
   {
     path: '/about',
@@ -21,7 +22,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta: { layout: SimplestLayout }
+    meta: { layout: MainLayoutApollo }
   }
 ]
 
