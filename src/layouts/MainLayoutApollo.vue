@@ -20,7 +20,6 @@
          <span class="topbar-search">
             <Locale />
          </span>
-         <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />
       </div>
       <div class="layout-menu-container" :style="{ display: sideMenuOn ? 'none' : 'block' }">
          <div class="layout-menu-title">MENU</div>
@@ -28,6 +27,7 @@
       </div>
       <div class="layout-content">
          <div class="layout-content-container">
+            <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />
             <slot />
          </div>
       </div>
