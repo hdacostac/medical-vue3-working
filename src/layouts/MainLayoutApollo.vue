@@ -1,8 +1,8 @@
 <template>
-   <div class="layout-wrapper layout-static">
+   <div class="layout-wrapper layout-static" :class="{ 'layout-static-inactive': sideMenuOn }">
       <Toast />
       <div class="topbar clearfix">
-         <button class="p-link menu-button">
+         <button class="p-link menu-button" @click="toggleSideMenu">
             <i class="pi pi-bars"></i>
          </button>
          <a href="#/" class="logo-link" aria-current="page">
@@ -22,7 +22,7 @@
          </span>
          <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />
       </div>
-      <div class="layout-menu-container">
+      <div class="layout-menu-container" :style="{ display: sideMenuOn ? 'none' : 'block' }">
          <div class="layout-menu-title">MENU</div>
          <PanelMenu :model="items" />
       </div>
@@ -71,6 +71,7 @@ export default {
   },
   data() {
       return {
+         sideMenuOn: true,
          items: [
             {
                label: 'Options',
@@ -103,12 +104,17 @@ export default {
                }
             ]}
          ]
-   }
-   },
+   }},
    methods: {
+      toggleSideMenu() {
+         this.sideMenuOn = !this.sideMenuOn;
+      },
       toggle(event) {
          this.$refs.menu.toggle(event);
       }
+   },
+   mounted() {
+      this.toggleSideMenu();
    }
 };
 </script>
