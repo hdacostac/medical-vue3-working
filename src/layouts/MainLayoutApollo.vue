@@ -8,7 +8,7 @@
          <a href="#/" class="logo-link" aria-current="page">
             <img alt="apollo-layout" src="@/assets/images/apollo_logo.png" class="logo">
          </a>
-         <button class="p-link profile" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
+         <button class="p-link profile" @click="toggleProfileMenu" aria-haspopup="true" aria-controls="overlay_menu">
             <span class="username">Sarah Miller</span>
             <img src="@/assets/images/avatar.png" alt="apollo-layout">
             <i class="pi pi-angle-down"></i>
@@ -109,7 +109,7 @@ export default {
       toggleSideMenu() {
          this.sideMenuOn = !this.sideMenuOn;
       },
-      toggle(event) {
+      toggleProfileMenu(event) {
          this.$refs.menu.toggle(event);
       }
    },

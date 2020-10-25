@@ -113,10 +113,8 @@ import Calendar from '@/components/Calendar.vue';
 import { Form } from 'vee-validate';
 import * as Yup from "yup";
 
-// eslint-disable-next-line no-unused-vars
-import { restApi, fillArrayFromRest } from '@/configuration/rest.config';
+import { fillArrayFromRest } from '@/configuration/rest.config';
 import patientDTO from '@/model/PatientDTO';
-
 import PatientFormController from '@/controllers/PatientFormController';
 
 export default {
@@ -234,7 +232,6 @@ export default {
     onChangeSex: function(event){
       this.avatar.selected = event;
     },
-    // eslint-disable-next-line no-unused-vars
     onSubmit: function(values, { form }) {
       this.patientFormController.save(this.patient, this, form);
     },
