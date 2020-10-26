@@ -7,7 +7,7 @@
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
-            <AvatarUpload :avatar="avatar.images[avatar.selected]"></AvatarUpload>
+            <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange"></AvatarUpload>
           </div>
           <div class="column">
             <div class="columns is-multiline">
@@ -231,6 +231,9 @@ export default {
     },
     onChangeSex: function(event){
       this.avatar.selected = event;
+    },
+    onAvatarChange: function(avatarInfo) {
+      console.log("Info de la imagen:" + avatarInfo);
     },
     onSubmit: function(values, { form }) {
       this.patientFormController.save(this.patient, this, form);

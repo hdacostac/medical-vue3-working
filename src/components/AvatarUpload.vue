@@ -35,6 +35,7 @@ export default {
          avatarImageMaxSizeValue: avatarImageMaxSize
       }
    },
+   emits: ['on-success'],
    props: {
       avatar: {
          type: Object,
@@ -59,7 +60,7 @@ export default {
    methods: {
       avatarUploader(event) {
          this.uploadDisabled = true;
-         showMessage(this, {severity: 'info', summary: this.t('global.in.process'), detail: this.t('avatar.patient.uploading.detail.message'), life: 3000})
+         showMessage(this, {severity: 'info', summary: this.t('global.in.process'), detail: this.t('avatar.patient.uploading.detail.message'), life: 3000});
 
          let formData = new FormData();
          formData.append("image", event.files[0]);
@@ -71,13 +72,17 @@ export default {
             }
          // eslint-disable-next-line no-unused-vars
          }).then(function(res) {
-            showMessage(self, {severity: 'success', summary: self.t('global.done'), detail: self.t('avatar.patient.upload.done'), life: 6000})
+            console.log("Response:" + res.data['messageKey']);
+
+            showMessage(self, {severity: 'success', summary: self.t('global.done'), detail: self.t('avatar.patient.upload.done'), life: 6000});
 
             self.uploadDisabled = false;
+
+            self.$emit('on-success', res.data);
          }).catch(e => {
             console.log(e);
 
-            showMessage(self, {severity: 'error', summary: self.t('global.problem'), detail: self.t('avatar.patient.upload.problem'), life: 3000})
+            showMessage(self, {severity: 'error', summary: self.t('global.problem'), detail: self.t('avatar.patient.upload.problem'), life: 3000});
 
             self.uploadDisabled = false;
          });
