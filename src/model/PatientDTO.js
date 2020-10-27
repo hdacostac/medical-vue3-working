@@ -17,6 +17,7 @@ const patientDTO = {
     birthDate: null,
     sexId: null,
     bloodGroupId: 0,
+    url1FileName: null,
     version: null
 }
 

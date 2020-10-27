@@ -7,7 +7,7 @@
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
-            <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange"></AvatarUpload>
+            <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange" :url="patient.url1FileName"></AvatarUpload>
           </div>
           <div class="column">
             <div class="columns is-multiline">
@@ -233,7 +233,9 @@ export default {
       this.avatar.selected = event;
     },
     onAvatarChange: function(avatarInfo) {
-      console.log("Info de la imagen:" + avatarInfo);
+      console.log("Info de la imagen:" + avatarInfo.filePath);
+
+      this.patient.url1FileName = avatarInfo.filePath;
     },
     onSubmit: function(values, { form }) {
       this.patientFormController.save(this.patient, this, form);

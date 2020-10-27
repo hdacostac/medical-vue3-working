@@ -4,12 +4,15 @@
          <p class="card-header-title">{{ $t('avatar.patient.title') }}</p>
       </header>
       <div class="card-content">
-         <figure class="image is-256x256" style="margin: 0 auto">
+         <figure class="image is-256x256" style="margin: 0 auto" v-show="!url">
             <img :src="avatar.src">
+         </figure>
+         <figure class="image is-256x256" style="margin: 0 auto" v-show="url">
+            <img :src="avatarDownloaded">
          </figure>
          <div class="file">
             <FileUpload mode="basic" :customUpload="true" @uploader="avatarUploader" accept="image/*" 
-               :maxFileSize="avatarImageMaxSizeValue" auto="true" 
+               :maxFileSize="avatarImageMaxSizeValue" auto="true" style="margin: 0 auto;"
                :chooseLabel="chooseLabel"
                :disabled="uploadDisabled"
                :invalidFileSizeMessage="$t('avatar.patient.invalid.file.size.message', [calculateMB])">
@@ -32,13 +35,17 @@ export default {
    data() {
       return {
          uploadDisabled: false,
-         avatarImageMaxSizeValue: avatarImageMaxSize
+         avatarImageMaxSizeValue: avatarImageMaxSize,
+         avatarDownloaded: null,
       }
    },
    emits: ['on-success'],
    props: {
       avatar: {
          type: Object,
+      },
+      url: {
+         type: String
       }
    },
    setup() {
@@ -57,8 +64,16 @@ export default {
          return this.uploadDisabled ? this.t('avatar.patient.uploading') : this.t('avatar.patient.choose.image');
       }
    },
+   watch: {
+      // eslint-disable-next-line no-unused-vars
+      url(newUrl, oldUrl) {
+         if (newUrl) {
+            this.avatarDownloader();
+         }
+      }
+   },
    methods: {
-      avatarUploader(event) {
+      avatarUploader: function(event) {
          this.uploadDisabled = true;
          showMessage(this, {severity: 'info', summary: this.t('global.in.process'), detail: this.t('avatar.patient.uploading.detail.message'), life: 3000});
 
@@ -70,7 +85,6 @@ export default {
             headers: {
                'Content-Type': 'multipart/form-data'
             }
-         // eslint-disable-next-line no-unused-vars
          }).then(function(res) {
             console.log("Response:" + res.data['messageKey']);
 
@@ -85,6 +99,22 @@ export default {
             showMessage(self, {severity: 'error', summary: self.t('global.problem'), detail: self.t('avatar.patient.upload.problem'), life: 3000});
 
             self.uploadDisabled = false;
+         });
+      },
+      avatarDownloader: function() {
+         console.log("Trying to download an image:" + this.url);
+
+         let self = this;
+         restApi.get('/v1/resources/image', {
+            params: {
+               'url': this.url
+            }
+         }).then(function(res) {
+            self.avatarDownloaded = 'data:image/jpg;base64,' + res.data;
+         }).catch(e => {
+            console.log(e);
+
+            showMessage(self, {severity: 'error', summary: self.t('global.problem'), detail: self.t('avatar.patient.download.problem'), life: 3000});
          });
       }
 	}
