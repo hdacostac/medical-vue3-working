@@ -22,6 +22,12 @@
    </div>
 </template>
 
+<style lang="postcss" scoped>
+   .file {
+      margin-top: 5px;
+   }
+</style>
+
 <script>
 import FileUpload from 'primevue/fileupload';
 import { useI18n } from "vue-i18n";

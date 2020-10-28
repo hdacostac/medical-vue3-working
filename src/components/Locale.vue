@@ -1,8 +1,10 @@
 <template>
    <div>
       <select v-model="locale">
-         <option>en</option>
          <option>es</option>
+         <option>ca</option>
+         <option>pt</option>
+         <option>fr</option>
       </select>     
    </div>
 </template>

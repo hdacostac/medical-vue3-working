@@ -1,14 +1,6 @@
 {
     "title": "Al final lo hemos logrado!!!",
     "patient.form.tab.personal.data.title": "Datos personales",
-    "patient.form.name": "Nombre",
-    "patient.form.placeholder.name": "Nombre del paciente",
-    "patient.form.lastname": "Apellidos",
-    "patient.form.placeholder.lastname": "Apellidos del paciente",
-    "patient.form.identity.document": "(DNI) Documento nacional de identidad",
-    "patient.form.placeholder.identity.document": "Documento de identidad",
-    "patient.form.sanitary.document": "Documento sanitario",
-    "patient.form.placeholder.sanitary.document": "Documento sanitario",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",

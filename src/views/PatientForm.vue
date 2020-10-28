@@ -4,7 +4,7 @@
     <Form @submit="onSubmit" :validation-schema="validationSchema" v-slot="{ meta }">
       <Tabs :model="tabModel"></Tabs>
       <div id="tab1" class="container is-fluid">
-        <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }} id:{{ patient.id}} version: {{ patient.version}}</h1>
+        <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
             <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange" :url="patient.url1FileName"></AvatarUpload>
@@ -12,20 +12,20 @@
           <div class="column">
             <div class="columns is-multiline">
               <div class="column is-half">
-                <InputText id="name" label="Nombres" 
-                  placeHolder="Nombre del paciente" v-model="patient.name"></InputText>
+                <InputText id="name" :label="$t('patient.form.name')" 
+                  :placeHolder="$t('patient.form.placeholder.name')" v-model="patient.name"></InputText>
               </div>
               <div class="column is-half">
-                <InputText id="lastName" label="Apellidos" 
-                  placeHolder="Apellido del paciente" v-model="patient.lastName"></InputText>
+                <InputText id="lastName" :label="$t('patient.form.lastname')" 
+                  :placeHolder="$t('patient.form.placeholder.lastname')" v-model="patient.lastName"></InputText>
               </div>
               <div class="column is-half">
-                <InputText id="identityDocument" label="(DNI) Documento nacional de identidad" 
-                  placeHolder="Documento de identidad" v-model="patient.identityDocument"></InputText>
+                <IdentityDocument id="identityDocument" :label="$t('patient.form.identity.document')" :documentType="documentTypeSelected"
+                  :placeHolder="$t('patient.form.placeholder.identity.document')" @change="onChangeDocumentType" v-model="patient.identityDocument"></IdentityDocument>
               </div>
               <div class="column is-half">
-                <InputText id="sanitaryDocument" label="Documento sanitario" 
-                  placeHolder="Documento sanitario" v-model="patient.sanitaryDocument"></InputText>
+                <InputText id="sanitaryDocument" :label="$t('patient.form.sanitary.document')" 
+                  :placeHolder="$t('patient.form.placeholder.sanitary.document')" v-model="patient.sanitaryDocument"></InputText>
               </div>
               <div class="column is-half">
                 <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
@@ -108,6 +108,7 @@ import InputText from '@/components/InputText.vue';
 import SelectOptions from '@/components/SelectOptions.vue';
 import RadioOptions from '@/components/RadioOptions.vue';
 import Calendar from '@/components/Calendar.vue';
+import IdentityDocument from '@/components/IdentityDocument.vue';
 
 // Validation part
 import { Form } from 'vee-validate';
@@ -126,7 +127,8 @@ export default {
     SelectOptions, 
     RadioOptions, 
     Calendar,
-    Form
+    Form,
+    IdentityDocument
   },
   setup() {
     const validationEntity = {
@@ -152,6 +154,7 @@ export default {
       municipalityItems: [{id: 1, description: "Loading data..."}],
       postalCodeSelected: null,
       postalCodeItems: [{id: 1, code: "Loading data..."}],
+      documentTypeSelected: null,
       tabModel: [{
         tabId: 'tab1',
         title: 'Datos principales',
@@ -216,6 +219,12 @@ export default {
   },
   // our methods
   methods: {
+    onChangeDocumentType: function(event){
+      this.documentTypeSelected = event.value;
+
+      console.log("Event:" + event.value.code);
+      console.log("VAlor en modelo:" + this.documentTypeSelected.code);
+    },
     onChangeMunicipality: function(event){
       this.postalCodeSelected = null;
 
