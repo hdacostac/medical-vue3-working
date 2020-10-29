@@ -5,8 +5,8 @@
          <Field :name="id" v-slot="{ field }">
             <div class="columns is-gapless is-multiline">
                <div class="column is-narrow">
-                  <PrimeDropdown :id="`${id}Type`" v-model="documentTypeValue" :options="documentTypeItems" optionLabel="description" 
-                     placeholder="Tipo" @change="this.$emit('change', $event)">
+                  <PrimeDropdown :id="`${id}Type`" v-model="documentTypeValue" :options="items" :optionLabel="itemValue" 
+                     :placeholder="$t('component.identity.document.type.label')" @change="this.$emit('change', $event)">
                   </PrimeDropdown>
                </div>
                <div class="column">
@@ -41,20 +41,6 @@ export default {
       ErrorMessage,
       InlineMessage
    },
-   data() {
-      return {
-         documentTypeItems: [
-            {
-               code: 'DNI',
-               description: 'DNI'
-            },
-            {
-               code: 'NIE',
-               description: 'NIE'
-            }
-         ]
-      }
-   },
    props: {
       id: {
          type: String 
@@ -74,6 +60,12 @@ export default {
       trim: {
          type: Boolean,
          default: true
+      },
+      items: {
+         type: Array
+      },
+      itemValue: {
+         type: String
       }
    },
    computed: {

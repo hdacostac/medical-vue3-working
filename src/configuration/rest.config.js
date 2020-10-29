@@ -17,8 +17,9 @@ export function init(baseUrl) {
   //   }
   // });
   
-  restApi.interceptors.request.use(req => {
+  restApi.interceptors.request.use(function(req) {
     req.headers.Authorization = `Bearer ${sessionStorage.access_token}`;
+    // req.headers['Accept-Language'] = 'sdf';
   
     return req;
   });

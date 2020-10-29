@@ -20,15 +20,16 @@
                   :placeHolder="$t('patient.form.placeholder.lastname')" v-model="patient.lastName"></InputText>
               </div>
               <div class="column is-half">
-                <IdentityDocument id="identityDocument" :label="$t('patient.form.identity.document')" :documentType="documentTypeSelected"
-                  :placeHolder="$t('patient.form.placeholder.identity.document')" @change="onChangeDocumentType" v-model="patient.identityDocument"></IdentityDocument>
+                <IdentityDocument id="identityDocument" :label="$t('patient.form.identity.document')" :documentType="identityDocumentsTypeSelected"
+                  :placeHolder="$t('patient.form.placeholder.identity.document')" @change="onChangeDocumentType" v-model="patient.identityDocument"
+                  item-value="description" :items="identityDocumentsTypesItems"></IdentityDocument>
               </div>
               <div class="column is-half">
                 <InputText id="sanitaryDocument" :label="$t('patient.form.sanitary.document')" 
                   :placeHolder="$t('patient.form.placeholder.sanitary.document')" v-model="patient.sanitaryDocument"></InputText>
               </div>
               <div class="column is-half">
-                <RadioOptions id="sexId" label="Sexo" item-key="id" item-value="description" 
+                <RadioOptions id="sexId" :label="$t('patient.form.sex')" item-key="id" item-value="description" 
                   :items="sexItems" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
               </div>
               <div class="column is-half">
@@ -154,7 +155,8 @@ export default {
       municipalityItems: [{id: 1, description: "Loading data..."}],
       postalCodeSelected: null,
       postalCodeItems: [{id: 1, code: "Loading data..."}],
-      documentTypeSelected: null,
+      identityDocumentsTypeSelected: null,
+      identityDocumentsTypesItems: [{id: 1, code: "Loading data..."}],
       tabModel: [{
         tabId: 'tab1',
         title: 'Datos principales',
@@ -187,6 +189,7 @@ export default {
     this.getSexItems();
     this.getBloodGroupsItems();
     this.getProvinceItems();
+    this.getIdentityDocumentTypesItems();
   },
   computed: {
     saveIcon: function() {
@@ -220,10 +223,10 @@ export default {
   // our methods
   methods: {
     onChangeDocumentType: function(event){
-      this.documentTypeSelected = event.value;
+      this.identityDocumentsTypeSelected = event.value;
 
       console.log("Event:" + event.value.code);
-      console.log("VAlor en modelo:" + this.documentTypeSelected.code);
+      console.log("VAlor en modelo:" + this.identityDocumentsTypeSelected.code);
     },
     onChangeMunicipality: function(event){
       this.postalCodeSelected = null;
@@ -253,7 +256,10 @@ export default {
       fillArrayFromRest('/v1/simple/sex', this, 'sexItems');
     },
     getBloodGroupsItems: function() {
-      fillArrayFromRest('/v1/simple/bloodGroups', this, 'bloodGroupsItems');
+      fillArrayFromRest('/v1/simple/blood-groups', this, 'bloodGroupsItems');
+    },
+    getIdentityDocumentTypesItems: function() {
+      fillArrayFromRest('/v1/simple/identity-documents-types', this, 'identityDocumentsTypesItems');
     },
     getProvinceItems: function() {
       fillArrayFromRest('/v1/simple/provinces', this, 'provinceItems');

@@ -5,10 +5,11 @@
     "patient.form.placeholder.name": "Nombre del paciente",
     "patient.form.lastname": "Apellidos",
     "patient.form.placeholder.lastname": "Apellidos del paciente",
-    "patient.form.identity.document": "(DNI) Documento nacional de identidad",
+    "patient.form.identity.document": "Documento de identidad",
     "patient.form.placeholder.identity.document": "Documento de identidad",
     "patient.form.sanitary.document": "Documento sanitario",
     "patient.form.placeholder.sanitary.document": "Documento sanitario",
+    "patient.form.sex": "Sexo",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",
@@ -20,5 +21,7 @@
 
     "global.in.process": "En proceso...",
     "global.done": "Hecho!",
-    "global.problem": "Hubo un problema"
+    "global.problem": "Hubo un problema",
+
+    "component.identity.document.type.label": "Tipo"
 }

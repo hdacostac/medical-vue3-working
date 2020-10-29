@@ -1,6 +1,15 @@
 {
     "title": "Al final lo hemos logrado!!!",
-    "patient.form.tab.personal.data.title": "Datos personales",
+    "patient.form.tab.personal.data.title": "Informations personnelles",
+    "patient.form.name": "Nom",
+    "patient.form.placeholder.name": "Nom du patient",
+    "patient.form.lastname": "Prénom",
+    "patient.form.placeholder.lastname": "Prénom du patient",
+    "patient.form.identity.document": "Numéro d'identification",
+    "patient.form.placeholder.identity.document": "Numéro d'identification",
+    "patient.form.sanitary.document": "Document de santé",
+    "patient.form.placeholder.sanitary.document": "Document de santé",
+    "patient.form.sex": "Sexe",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",
@@ -12,5 +21,7 @@
 
     "global.in.process": "En proceso...",
     "global.done": "Hecho!",
-    "global.problem": "Hubo un problema"
+    "global.problem": "Hubo un problema",
+
+    "component.identity.document.type.label": "Type"
 }
