@@ -10,6 +10,12 @@
     "patient.form.sanitary.document": "Documento sanitario",
     "patient.form.placeholder.sanitary.document": "Documento sanitario",
     "patient.form.sex": "Sexo",
+    "patient.form.blood.group": "Grupo sanguíneo",
+    "patient.form.placeholder.blood.group": "Escoja un grupo sanguíneo",
+    "patient.form.birth.date": "Fecha de nacimiento",
+    "patient.form.placeholder.birth.date": "Indique una fecha",
+    "patient.form.placeholder.birth.date.calculate.label": "Ingrese una fecha de nacimiento para calcular la edad",
+    "patient.form.placeholder.birth.date.calculated.label": "El paciente tiene",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",
@@ -22,6 +28,9 @@
     "global.in.process": "En proceso...",
     "global.done": "Hecho!",
     "global.problem": "Hubo un problema",
+    "global.option.not.selected": "[Sin seleccionar]",
+    "global.option.years": "{0} años",
+
 
     "component.identity.document.type.label": "Tipo"
 }

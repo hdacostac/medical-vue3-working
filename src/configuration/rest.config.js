@@ -6,7 +6,7 @@ export function init(baseUrl) {
     baseURL: baseUrl,
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     }
   }));
   // restApi = axios.create({
@@ -19,7 +19,6 @@ export function init(baseUrl) {
   
   restApi.interceptors.request.use(function(req) {
     req.headers.Authorization = `Bearer ${sessionStorage.access_token}`;
-    // req.headers['Accept-Language'] = 'sdf';
   
     return req;
   });

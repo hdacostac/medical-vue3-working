@@ -33,15 +33,29 @@
                   :items="sexItems" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
               </div>
               <div class="column is-half">
-                <SelectOptions id="bloodGroupId" label="Grupo sanguíneo" item-key="id" item-value="description" 
-                  :items="bloodGroupsItems" v-model="bloodGroupSelected"></SelectOptions>
+                <SelectOptions id="bloodGroupId" :label="$t('patient.form.blood.group')" item-key="id" item-value="description" 
+                  :items="bloodGroupsItems" :placeHolder="$t('patient.form.placeholder.blood.group')" v-model="bloodGroupSelected"></SelectOptions>
               </div>
               <div class="column is-half">
-                <Calendar id="birthDate" label="Fecha de nacimiento"
-                  placeHolder="Fecha de nacimiento" v-model="patient.birthDate"></Calendar>
+                <Calendar id="birthDate" :label="$t('patient.form.birth.date')"
+                  :placeHolder="$t('patient.form.placeholder.birth.date')" v-model="patient.birthDate"></Calendar>
               </div>
               <div class="column is-half has-text-centered">
-                <span>{{ calculateAge }}</span>
+                <div v-if="!calculateAge.isValid">
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification has-background-light">
+                      <p class="is-size-4">{{ calculateAge.msg }}</p>
+                    </article>
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-primary">
+                      <p class="is-size-4">{{ $t('patient.form.placeholder.birth.date.calculated.label') }}</p>
+                      <p class="is-size-3">{{ calculateAge.msg }}</p>
+                    </article>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -101,6 +115,7 @@
 
 <script>
 import { markRaw } from 'vue';
+import { useI18n } from "vue-i18n";
 
 // @ is an alias to /src
 import Tabs from '@/components/Tabs.vue';
@@ -138,9 +153,12 @@ export default {
 
     const validationSchema = markRaw(Yup.object().shape(validationEntity));
 
+    const {t, locale} = useI18n();
+
     return {
       validationEntity,
       validationSchema,
+      t, locale
     }
   },
   data() {
@@ -197,13 +215,19 @@ export default {
     },
     calculateAge: function () {
       if(this.patient.birthDate == null) {
-        return 'Ingrese una fecha de nacimiento para calcular la edad';
+        return {
+          isValid: false,
+          msg: this.t('patient.form.placeholder.birth.date.calculate.label')
+        };
       }
 
       let ageCalculated = new Date().getFullYear() - new Date(this.patient.birthDate).getFullYear();
 
       if(ageCalculated >= 0 && ageCalculated <= 200){
-        return ageCalculated + ' años';
+        return {
+          isValid: true,
+          msg: this.t('global.option.years', [ageCalculated])
+        };
       }
 
       let dateParts = this.patient.birthDate.split("/");
@@ -213,11 +237,17 @@ export default {
         let ageCalculated = new Date().getFullYear() - new Date(dateParsed).getFullYear();
 
         if(ageCalculated >= 0 && ageCalculated <= 200){
-          return ageCalculated + ' años';
+          return {
+            isValid: true,
+            msg: this.t('global.option.years', [ageCalculated])
+          };
         }
       }
 
-      return 'Ingrese una fecha de nacimiento para calcular la edad';
+      return {
+        isValid: false,
+        msg: this.t('patient.form.placeholder.birth.date.calculate.label')
+      };
     }
   },
   // our methods
@@ -256,7 +286,9 @@ export default {
       fillArrayFromRest('/v1/simple/sex', this, 'sexItems');
     },
     getBloodGroupsItems: function() {
-      fillArrayFromRest('/v1/simple/blood-groups', this, 'bloodGroupsItems');
+      fillArrayFromRest('/v1/simple/blood-groups', this, 'bloodGroupsItems', null, () => {
+          this.bloodGroupsItems.unshift( { id: 0, code: "", description: this.t('global.option.not.selected') } )
+      });
     },
     getIdentityDocumentTypesItems: function() {
       fillArrayFromRest('/v1/simple/identity-documents-types', this, 'identityDocumentsTypesItems');

@@ -3,10 +3,8 @@
       <label :for="id" class="label">{{ label }}</label>
       <div class="control">
          <Field :name="id" v-slot="{ field }">
-            <PrimeDropdown :id="id" v-model="value" :options="items" :optionLabel="itemValue" v-bind="field" placeholder="Choose a blood group"
-               @change="this.$emit('change', $event)">
-               <!-- <option value="0" :selected="true">Choose Province</option>
-               <option v-for="item in items" :key="item[itemKey]" :value="item[itemKey]">{{ item[itemValue] }}</option> -->
+            <PrimeDropdown :id="id" v-model="value" :options="items" :optionLabel="itemValue" v-bind="field" 
+               :placeholder="placeHolder" @change="this.$emit('change', $event)">
             </PrimeDropdown>
             <ErrorMessage :name="id" v-slot="{ message }" as="div">
                <InlineMessage v-show="message">{{ message }}</InlineMessage>
@@ -42,6 +40,9 @@ export default {
          type: Array
       },
       itemValue: {
+         type: String
+      },
+      placeHolder: {
          type: String
       }
    },
