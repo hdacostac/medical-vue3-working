@@ -1,5 +1,6 @@
 <template>
    <div class="layout-wrapper layout-static" :class="{ 'layout-static-inactive': sideMenuOn }">
+      
       <Toast />
       <div class="topbar clearfix">
          <button class="p-link menu-button" @click="toggleSideMenu">
@@ -46,6 +47,7 @@
 
 <script>
 import 'bulma/css/bulma.min.css';
+// import 'bulma-extensions/bulma-pageloader/dist/css/bulma-pageloader.min.css';
 // import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';

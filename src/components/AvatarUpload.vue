@@ -1,23 +1,18 @@
 <template>
-   <div class="card">
-      <header class="card-header">
-         <p class="card-header-title">{{ $t('avatar.patient.title') }}</p>
-      </header>
-      <div class="card-content">
-         <figure class="image is-256x256" style="margin: 0 auto" v-show="!url">
-            <img :src="avatar.src">
-         </figure>
-         <figure class="image is-256x256" style="margin: 0 auto" v-show="url">
-            <img :src="avatarDownloaded">
-         </figure>
-         <div class="file">
-            <FileUpload mode="basic" :customUpload="true" @uploader="avatarUploader" accept="image/*" 
-               :maxFileSize="avatarImageMaxSizeValue" auto="true" style="margin: 0 auto;"
-               :chooseLabel="chooseLabel"
-               :disabled="uploadDisabled"
-               :invalidFileSizeMessage="$t('avatar.patient.invalid.file.size.message', [calculateMB])">
-            </FileUpload>
-         </div>
+   <div>
+      <figure class="image is-256x256" style="margin: 0 auto" v-show="!url">
+         <img :src="avatar.src" style="max-width: 256px">
+      </figure>
+      <figure class="image is-256x256" style="margin: 0 auto" v-show="url">
+         <img :src="avatarDownloaded" style="max-width: 256px">
+      </figure>
+      <div class="file">
+         <FileUpload mode="basic" :customUpload="true" @uploader="avatarUploader" accept="image/*" 
+            :maxFileSize="avatarImageMaxSizeValue" auto="true" style="margin: 0 auto;"
+            :chooseLabel="chooseLabel"
+            :disabled="uploadDisabled"
+            :invalidFileSizeMessage="$t('avatar.patient.invalid.file.size.message', [calculateMB])">
+         </FileUpload>
       </div>
    </div>
 </template>

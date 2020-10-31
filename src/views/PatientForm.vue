@@ -7,7 +7,15 @@
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }}</h1>
         <div class="columns">
           <div class="column is-one-quarter">
-            <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange" :url="patient.url1FileName"></AvatarUpload>
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title">{{ $t('avatar.patient.title') }}</p>
+              </header>
+              <div class="card-content" style="text-align: center">
+                <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange" :url="patient.url1FileName"></AvatarUpload>
+                
+              </div>
+          </div>
           </div>
           <div class="column">
             <div class="columns is-multiline">
@@ -33,12 +41,21 @@
                   :items="sexItems" v-model="patient.sexId" @change="onChangeSex($event)"></RadioOptions>
               </div>
               <div class="column is-half">
-                <SelectOptions id="bloodGroupId" :label="$t('patient.form.blood.group')" item-key="id" item-value="description" 
-                  :items="bloodGroupsItems" :placeHolder="$t('patient.form.placeholder.blood.group')" v-model="bloodGroupSelected"></SelectOptions>
-              </div>
-              <div class="column is-half">
                 <Calendar id="birthDate" :label="$t('patient.form.birth.date')"
                   :placeHolder="$t('patient.form.placeholder.birth.date')" v-model="patient.birthDate"></Calendar>
+              </div>
+              <div class="column is-half">
+                <div class="columns is-multiline">
+                  <div class="column is-full">
+                    <SelectOptions id="bloodGroupId" :label="$t('patient.form.blood.group')" item-key="id" item-value="description" 
+                      :items="bloodGroupsItems" :placeHolder="$t('patient.form.placeholder.blood.group')" v-model="bloodGroupSelected"></SelectOptions>
+                  </div>
+                  <div class="column is-full">
+                    <SelectOptions id="countryId" :label="$t('patient.form.country')" item-key="id" item-value="description" 
+                      :items="countryItems" :placeHolder="$t('patient.form.placeholder.country')" v-model="countrySelected"
+                      filter="true"></SelectOptions>
+                  </div>
+                </div>
               </div>
               <div class="column is-half has-text-centered">
                 <div v-if="!calculateAge.isValid">
@@ -173,6 +190,8 @@ export default {
       municipalityItems: [{id: 1, description: "Loading data..."}],
       postalCodeSelected: null,
       postalCodeItems: [{id: 1, code: "Loading data..."}],
+      countrySelected: null,
+      countryItems: [{id: 1, code: "Loading data..."}],
       identityDocumentsTypeSelected: null,
       identityDocumentsTypesItems: [{id: 1, code: "Loading data..."}],
       tabModel: [{
@@ -202,12 +221,20 @@ export default {
     }
   },
   mounted() {
+    this. $nextTick(function () {
+      console.log("Todo montado");
+      const el = document.querySelector('#pageloader');
+
+      el.classList.remove("is-active");
+    })
+
     this.patientFormController = new PatientFormController('/v1/patients', '/v1/patients', true);
 
     this.getSexItems();
     this.getBloodGroupsItems();
     this.getProvinceItems();
     this.getIdentityDocumentTypesItems();
+    this.getCountryItems();
   },
   computed: {
     saveIcon: function() {
@@ -295,6 +322,11 @@ export default {
     },
     getProvinceItems: function() {
       fillArrayFromRest('/v1/simple/provinces', this, 'provinceItems');
+    },
+    getCountryItems: function() {
+      fillArrayFromRest('/v1/simple/countries', this, 'countryItems', null, () => {
+          this.countryItems.unshift( { id: 0, code: "", description: this.t('global.option.not.selected') } )
+      });
     },
     getMunicipalityItems: function(provinceId) {
       let queryParams = {

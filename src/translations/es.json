@@ -16,6 +16,8 @@
     "patient.form.placeholder.birth.date": "Indique una fecha",
     "patient.form.placeholder.birth.date.calculate.label": "Ingrese una fecha de nacimiento para calcular la edad",
     "patient.form.placeholder.birth.date.calculated.label": "El paciente tiene",
+    "patient.form.country": "País de nacimiento",
+    "patient.form.placeholder.country": "Seleccione un país",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",

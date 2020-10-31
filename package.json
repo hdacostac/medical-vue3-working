@@ -11,6 +11,7 @@
     "axios": "^0.20.0",
     "axios-case-converter": "^0.6.0",
     "bulma": "^0.9.1",
+    "bulma-extensions": "^6.2.7",
     "core-js": "^3.6.5",
     "mitt": "^2.1.0",
     "primeicons": "^4.0.0",

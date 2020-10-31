@@ -4,7 +4,7 @@
       <div class="control">
          <Field :name="id" v-slot="{ field }">
             <PrimeDropdown :id="id" v-model="value" :options="items" :optionLabel="itemValue" v-bind="field" 
-               :placeholder="placeHolder" @change="this.$emit('change', $event)">
+               :placeholder="placeHolder" @change="this.$emit('change', $event)" :filter="filter">
             </PrimeDropdown>
             <ErrorMessage :name="id" v-slot="{ message }" as="div">
                <InlineMessage v-show="message">{{ message }}</InlineMessage>
@@ -44,6 +44,10 @@ export default {
       },
       placeHolder: {
          type: String
+      },
+      filter: {
+         type: Boolean,
+         default: false
       }
    },
    computed: {
