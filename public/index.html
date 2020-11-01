@@ -14,12 +14,42 @@
     <link id="theme-css" rel="stylesheet" type="text/css" href="<%= BASE_URL %>layout-blue-light.css">
 
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script> -->
+    <style>
+      html {
+        overflow-y: scroll;
+      }
+
+      .pageloader {
+        background: hsl(171, 100%, 29%);
+      }
+
+      .pageloader:after {
+        /* content: none; */
+        top: 43%;
+        left: 48.7%;
+      }
+
+      .center-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        content: '';
+        z-index: 9999;
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        box-sizing: border-box;
+        border: 0 solid #fff;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="pageloader" class="pageloader is-active"><span class="title">Pageloader</span></div>
+    <div id="pageloader" class="pageloader is-active">
+      <img class="center-logo" src="<%= BASE_URL %>medical-pro_ULTIMO.png" />
+    </div>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

@@ -14,6 +14,12 @@
    </div>
 </template>
 
+<style lang="postcss" scoped>
+   .p-dropdown {
+      width: 100%;
+   }
+</style>
+
 <script>
 import { Field, ErrorMessage } from 'vee-validate';
 import InlineMessage from 'primevue/inlinemessage';

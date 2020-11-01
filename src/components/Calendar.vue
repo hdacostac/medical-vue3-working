@@ -9,6 +9,12 @@
    </div>
 </template>
 
+<style lang="postcss" scoped>
+   .p-calendar {
+      width: 100%;
+   }
+</style>
+
 <script>
 import {mask} from 'vue-the-mask';
 

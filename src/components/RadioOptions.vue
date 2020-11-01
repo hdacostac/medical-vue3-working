@@ -1,7 +1,7 @@
 <template>
    <div class="field is-narrow">
       <label class="label">{{ label }}</label>
-      <div class="control">
+      <div class="control has-text-centered">
          <label :for="id + item[itemKey]" class="radio" v-for="item in items" :key="item[itemKey]">
             <PrimeRadioButton :id="id + item[itemKey]" :name="label" :value="item[itemKey]" v-model="value"
                @change="$emit('change', item[itemKey])" /> {{ item[itemValue] }}
