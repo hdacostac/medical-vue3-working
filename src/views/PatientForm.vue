@@ -1,7 +1,7 @@
 /* eslint-disable vue/no-deprecated-slot-attribute */
 <template>
   <div>
-    <Form @submit="onSubmit" :validation-schema="validationSchema" v-slot="{ meta }">
+    <Form @submit="onSubmit" :validation-schema="validationSchema">
       <Tabs :model="tabModel"></Tabs>
       <div id="tab1" class="container is-fluid">
         <h1 class="title">{{ $t('patient.form.tab.personal.data.title') }}</h1>
@@ -77,41 +77,44 @@
             </div>
           </div>
         </div>
-        <h1 class="title">Información de contacto</h1>
+        <h1 class="title">{{ $t('patient.form.tab.personal.data.contact.info.title') }}</h1>
         <div class="columns is-multiline">
           <div class="column is-one-third">
-            <InputText id="mobilePhone" label="Teléfono móvil" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Móvil" v-model="patient.mobilePhone"></InputText>
+            <InputText id="mobilePhone" :label="$t('patient.form.mobile.phone')" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
+              :placeHolder="$t('patient.form.placeholder.mobile.phone')" v-model="patient.mobilePhone"></InputText>
           </div>
           <div class="column is-one-third">
-            <InputText id="homePhone" label="Teléfono de casa" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
-              placeHolder="Teléfono" v-model="patient.homePhone"></InputText>
+            <InputText id="homePhone" :label="$t('patient.form.home.phone')" type="tel" pattern="[0-9]{3} [0-9]{9} [0-9]{3}"
+              :placeHolder="$t('patient.form.placeholder.home.phone')" v-model="patient.homePhone"></InputText>
           </div>
           <div class="column is-one-third">
-            <InputText id="email" label="Email" type="email"
-              placeHolder="Correo electrónico" v-model="patient.email"></InputText>
+            <InputText id="email" :label="$t('patient.form.email')" type="email"
+              :placeHolder="$t('patient.form.placeholder.email')" v-model="patient.email"></InputText>
           </div>
           <div class="column is-full">
-            <InputText id="addressLine1" label="Dirección 1" 
-              placeHolder="Dirección 1" v-model="patient.addressLine1"></InputText>
+            <InputText id="addressLine1" :label="$t('patient.form.address.first.part')" 
+              :placeHolder="$t('patient.form.placeholder.address.first.part')" v-model="patient.addressLine1"></InputText>
           </div>
           <div class="column is-full">
-            <InputText id="addressLine2" label="Dirección 2" 
-              placeHolder="Dirección 2" v-model="patient.addressLine2"></InputText>
+            <InputText id="addressLine2" :label="$t('patient.form.address.second.part')" 
+              :placeHolder="$t('patient.form.placeholder.address.second.part')" v-model="patient.addressLine2"></InputText>
           </div>
         </div>
         <div class="columns is-centered">
           <div class="column is-narrow">
-            <SelectOptions id="provinceId" label="Provincia" item-key="id" item-value="description" 
-              :items="provinceItems" v-model="provinceSelected" @change="onChangeProvince($event)"></SelectOptions>
+            <SelectOptions id="provinceId" :label="$t('patient.form.address.province')" item-key="id" item-value="description" 
+              :items="provinceItems" v-model="provinceSelected" @change="onChangeProvince($event)"
+              :placeHolder="$t('patient.form.placeholder.address.province')" filter="true"></SelectOptions>
           </div>
           <div class="column is-narrow">
-            <SelectOptions id="municipalityId" label="Municipalidad" item-key="id" item-value="description" 
-              :items="municipalityItems" v-model="municipalitySelected" @change="onChangeMunicipality($event)"></SelectOptions>
+            <SelectOptions id="municipalityId" :label="$t('patient.form.address.municipality')" item-key="id" item-value="description" 
+              :items="municipalityItems" v-model="municipalitySelected" @change="onChangeMunicipality($event)"
+              :placeHolder="$t('patient.form.placeholder.address.municipality')" filter="true"></SelectOptions>
           </div>
           <div class="column is-narrow">
-            <SelectOptions id="postalCodeId" label="Código postal" item-key="id" item-value="code" 
-              :items="postalCodeItems" v-model="postalCodeSelected"></SelectOptions>
+            <SelectOptions id="postalCodeId" :label="$t('patient.form.address.postal.code')" item-key="id" item-value="code" 
+              :items="postalCodeItems" v-model="postalCodeSelected"
+              :placeHolder="$t('patient.form.placeholder.address.postal.code')" filter="true"></SelectOptions>
           </div>
         </div>
       </div>
@@ -121,7 +124,6 @@
       <div class="section">
         <PrimeToolbar>
           <template v-slot:right>
-            Formulario tocado:{{ meta.touched}} Formulario manipulado {{ meta.dirty }}
             <PrimeButton label="Salvar" :icon="saveIcon" iconPos="right" type="submit" :disabled="isSubmitting" />
           </template>
         </PrimeToolbar>
@@ -175,7 +177,8 @@ export default {
     return {
       validationEntity,
       validationSchema,
-      t, locale
+      t, 
+      locale
     }
   },
   data() {
@@ -222,10 +225,7 @@ export default {
   },
   mounted() {
     this. $nextTick(function () {
-      console.log("Todo montado");
-      const el = document.querySelector('#pageloader');
-
-      el.classList.remove("is-active");
+      document.querySelector('#pageloader').classList.remove("is-active");
     })
 
     this.patientFormController = new PatientFormController('/v1/patients', '/v1/patients', true);
@@ -283,7 +283,7 @@ export default {
       this.identityDocumentsTypeSelected = event.value;
 
       console.log("Event:" + event.value.code);
-      console.log("VAlor en modelo:" + this.identityDocumentsTypeSelected.code);
+      console.log("Valor en modelo:" + this.identityDocumentsTypeSelected.code);
     },
     onChangeMunicipality: function(event){
       this.postalCodeSelected = null;

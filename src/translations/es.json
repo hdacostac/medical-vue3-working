@@ -1,6 +1,7 @@
 {
     "title": "Al final lo hemos logrado!!!",
     "patient.form.tab.personal.data.title": "Datos personales",
+    "patient.form.tab.personal.data.contact.info.title": "Información de contacto",
     "patient.form.name": "Nombre",
     "patient.form.placeholder.name": "Nombre del paciente",
     "patient.form.lastname": "Apellidos",
@@ -18,6 +19,22 @@
     "patient.form.placeholder.birth.date.calculated.label": "El paciente tiene",
     "patient.form.country": "País de nacimiento",
     "patient.form.placeholder.country": "Seleccione un país",
+    "patient.form.mobile.phone": "Teléfono móvil",
+    "patient.form.placeholder.mobile.phone": "Móvil",
+    "patient.form.home.phone": "Teléfono de casa",
+    "patient.form.placeholder.home.phone": "Teléfono",
+    "patient.form.email": "Email",
+    "patient.form.placeholder.email": "Correo electrónico",
+    "patient.form.address.first.part": "Dirección (primera parte)",
+    "patient.form.placeholder.address.first.part": "Dirección",
+    "patient.form.address.second.part": "Dirección (segunda parte)",
+    "patient.form.placeholder.address.second.part": "Dirección",
+    "patient.form.address.province": "Provincia",
+    "patient.form.placeholder.address.province": "Seleccione una provincia",
+    "patient.form.address.municipality": "Municipio",
+    "patient.form.placeholder.address.municipality": "Seleccione un municipio",
+    "patient.form.address.postal.code": "Código postal",
+    "patient.form.placeholder.address.postal.code": "Seleccione un código postal",
 
     "avatar.patient.title": "Foto del paciente",
     "avatar.patient.choose.image": "Escoja una imagen",
@@ -32,7 +49,6 @@
     "global.problem": "Hubo un problema",
     "global.option.not.selected": "[Sin seleccionar]",
     "global.option.years": "{0} años",
-
 
     "component.identity.document.type.label": "Tipo"
 }
