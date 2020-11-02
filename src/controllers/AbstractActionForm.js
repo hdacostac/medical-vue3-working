@@ -22,7 +22,6 @@ class AbstractActionForm {
         
         try {
             this.setSubmittingFlag(true);
-            // this.ctx.isSubmitting = true;
 
             this.currentVersion = this.getCurrentVersion(entity);
 
@@ -35,7 +34,6 @@ class AbstractActionForm {
             console.log('Exception on global:' + e);
 
             this.setSubmittingFlag(false);
-            // this.ctx.isSubmitting = false;
         }
     }
 
@@ -184,25 +182,22 @@ class AbstractActionForm {
         }
 
         this.setSubmittingFlag(false);
-        // this.ctx.isSubmitting = false;
     }
 
     onSuccessSave() {
         console.log('Executing method onSuccessSave()');
 
-        this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro salvado correctamente', life: 3000});
+        this.ctx.$toast.add({severity:'success', summary: this.ctx.t('global.record.saved.successfully.summary'), detail: this.ctx.t('global.record.saved.successfully'), life: 3000});
         
         this.setSubmittingFlag(false);
-        // this.ctx.isSubmitting = false;
     }
 
     onSuccessUpdate() {
         console.log('Executing method onSuccessUpdate()');
 
-        this.ctx.$toast.add({severity:'success', summary: 'Salvado', detail:'Registro actualizado correctamente', life: 3000});
+        this.ctx.$toast.add({severity:'success', summary: this.ctx.t('global.record.updated.successfully.summary'), detail: this.ctx.t('global.record.updated.successfully'), life: 3000});
         
         this.setSubmittingFlag(false);
-        // this.ctx.isSubmitting = false;
     }
 
     setValuesToForm(entity) {

@@ -49,6 +49,10 @@
     "global.problem": "Hubo un problema",
     "global.option.not.selected": "[Sin seleccionar]",
     "global.option.years": "{0} años",
+    "global.record.saved.successfully.detail": "Registro guardado exitosamente",
+    "global.record.saved.successfully.summary": "Salvado",
+    "global.record.updated.successfully.detail": "Registro actualizado exitosamente",
+    "global.record.updated.successfully.summary": "Actualizado",
 
     "component.identity.document.type.label": "Tipo"
 }

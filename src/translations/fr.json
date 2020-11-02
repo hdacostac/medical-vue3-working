@@ -49,6 +49,10 @@
     "global.problem": "Il y a eu un problème",
     "global.option.not.selected": "[Non séléctionné]",
     "global.option.years": "{0} ans",
+    "global.record.saved.successfully.detail": "Enregistrement enregistré avec succès",
+    "global.record.saved.successfully.summary": "Sauvé",
+    "global.record.updated.successfully.detail": "Dossier actualisé",
+    "global.record.updated.successfully.summary": "Sauvé",
 
     "component.identity.document.type.label": "Type"
 }
