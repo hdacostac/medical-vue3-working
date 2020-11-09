@@ -13,7 +13,6 @@
               </header>
               <div class="card-content" style="text-align: center">
                 <AvatarUpload :avatar="avatar.images[avatar.selected]" @onSuccess="onAvatarChange" :url="patient.url1FileName"></AvatarUpload>
-                
               </div>
           </div>
           </div>
