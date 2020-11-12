@@ -148,7 +148,10 @@ import IdentityDocument from '@/components/IdentityDocument.vue';
 import { Form } from 'vee-validate';
 import * as Yup from "yup";
 
+// Connection part
 import { fillArrayFromRest } from '@/configuration/rest.config';
+
+// Controller part
 import patientDTO from '@/model/PatientDTO';
 import PatientFormController from '@/controllers/PatientFormController';
 
@@ -161,17 +164,17 @@ export default {
     SelectOptions, 
     RadioOptions, 
     Calendar,
-    Form,
-    IdentityDocument
+    IdentityDocument,
+    Form
   },
   setup() {
+    const {t, locale} = useI18n();
+
     const validationEntity = {
-      name: Yup.string().required().label('Nombres')
-    };
+      name: Yup.string().required().label(t('patient.form.name'))
+    }
 
     const validationSchema = markRaw(Yup.object().shape(validationEntity));
-
-    const {t, locale} = useI18n();
 
     return {
       validationEntity,
