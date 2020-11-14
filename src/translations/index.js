@@ -1,4 +1,5 @@
 import { createI18n } from 'vue-i18n';
+import { setLocale } from 'yup';
 import es from './es.json';
 import ca from './ca.json';
 import pt from './pt.json';
@@ -24,6 +25,18 @@ const i18n = createI18n({
         fr
     },
     fallbackLocale: 'es'
+});
+
+setLocale({
+    // use constant translation keys for messages without values
+    mixed: {
+        required: 'global.field.required',
+    },
+    // use functions to generate an error object that includes the value from the schema
+    number: {
+        min: ({ min }) => ({ key: 'field_too_short', values: { min } }),
+        max: ({ max }) => ({ key: 'field_too_big', values: { max } }),
+    },
 });
 
 export default i18n;

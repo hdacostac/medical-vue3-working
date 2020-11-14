@@ -54,5 +54,7 @@
     "global.record.updated.successfully.detail": "Dossier actualisé",
     "global.record.updated.successfully.summary": "Sauvé",
 
-    "component.identity.document.type.label": "Type"
+    "component.identity.document.type.label": "Type",
+
+    "global.field.required": "Champ requis"
 }

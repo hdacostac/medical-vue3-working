@@ -5,7 +5,7 @@
          <Field :name="id" v-slot="{ field }">
             <PrimeInputText :id="id" :name="id" :label="label" class="input" :type="type" v-model="value" v-bind="field" :placeHolder="placeHolder" />
             <ErrorMessage :name="id" v-slot="{ message }">
-               <InlineMessage v-show="message">{{ message }}</InlineMessage>
+               <InlineMessage v-if="message">{{ $t(message) }}</InlineMessage>
             </ErrorMessage>
          </Field>
       </div>
@@ -15,6 +15,7 @@
 <script>
 import { Field, ErrorMessage } from 'vee-validate';
 import InlineMessage from 'primevue/inlinemessage';
+import { useI18n } from "vue-i18n";
 
 export default {
    name: 'InputText',
@@ -45,6 +46,11 @@ export default {
          type: Boolean,
          default: true
       }
+   },
+   setup() {
+      const {t} = useI18n();
+
+      return {t};
    },
    computed: {
       value: {

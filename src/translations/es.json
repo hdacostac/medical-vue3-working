@@ -54,5 +54,7 @@
     "global.record.updated.successfully.detail": "Registro actualizado exitosamente",
     "global.record.updated.successfully.summary": "Actualizado",
 
-    "component.identity.document.type.label": "Tipo"
+    "component.identity.document.type.label": "Tipo",
+
+    "global.field.required": "Campo requerido"
 }
