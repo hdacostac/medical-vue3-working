@@ -171,7 +171,11 @@ export default {
     const {t, locale} = useI18n();
 
     const validationEntity = {
-      name: Yup.string().required().label(t('patient.form.name'))
+      name: Yup.string().max(64).required().label(t('patient.form.name')),
+      lastName: Yup.string().max(64).required().label(t('patient.form.lastname')),
+      identityDocumentTypeId: Yup.number().required().label(t('patient.form.identity.document')),
+      identityDocument: Yup.string().max(64).required().label(t('patient.form.identity.document')),
+      sanitaryDocument: Yup.string().max(64).label(t('patient.form.sanitary.document'))
     }
 
     const validationSchema = markRaw(Yup.object().shape(validationEntity));

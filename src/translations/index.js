@@ -30,7 +30,10 @@ const i18n = createI18n({
 setLocale({
     // use constant translation keys for messages without values
     mixed: {
-        required: 'global.field.required',
+        required: () => ({ key: 'global.field.required' }),
+    },
+    string: {
+        max: ({ max }) => ({ key: 'global.field.max.length', values: { max } })
     },
     // use functions to generate an error object that includes the value from the schema
     number: {

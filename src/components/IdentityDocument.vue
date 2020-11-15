@@ -14,7 +14,7 @@
                </div>
                <div class="column is-full">
                   <ErrorMessage :name="id" v-slot="{ message }">
-                     <InlineMessage v-show="message">{{ message }}</InlineMessage>
+                     <InlineMessage v-if="message">{{ $t(message.key, message.values) }}</InlineMessage>
                   </ErrorMessage>
                </div>
             </div>

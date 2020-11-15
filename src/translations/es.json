@@ -56,5 +56,6 @@
 
     "component.identity.document.type.label": "Tipo",
 
-    "global.field.required": "Campo requerido"
+    "global.field.required": "Campo requerido",
+    "global.field.max.length": "La longitud del campo no puede ser mayor a {max}"
 }

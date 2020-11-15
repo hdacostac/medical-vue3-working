@@ -7,7 +7,7 @@
                :placeholder="placeHolder" @change="this.$emit('change', $event)" :filter="filter">
             </PrimeDropdown>
             <ErrorMessage :name="id" v-slot="{ message }" as="div">
-               <InlineMessage v-show="message">{{ message }}</InlineMessage>
+               <InlineMessage v-if="message">{{ $t(message.key, message.values) }}</InlineMessage>
             </ErrorMessage>
          </Field>
       </div>
