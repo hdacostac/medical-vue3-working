@@ -177,11 +177,15 @@ class AbstractActionForm {
             console.log('\tHandling exceptions from error code 5000');
 
             Object.entries(e.response.data.fieldErrors).forEach(item => { 
-                this.form.setFieldError(item[1].field, { key: item[1].message });
+                this.setFieldError(item);
             });
         }
 
         this.setSubmittingFlag(false);
+    }
+
+    setFieldError(item) {
+        this.form.setFieldError(item[1].field, { key: item[1].message });
     }
 
     onSuccessSave() {

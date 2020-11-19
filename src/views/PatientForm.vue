@@ -171,11 +171,14 @@ export default {
     const {t, locale} = useI18n();
 
     const validationEntity = {
-      name: Yup.string().max(64).required().label(t('patient.form.name')),
-      lastName: Yup.string().max(64).required().label(t('patient.form.lastname')),
-      identityDocumentTypeId: Yup.number().required().label(t('patient.form.identity.document')),
-      identityDocument: Yup.string().max(64).required().label(t('patient.form.identity.document')),
-      sanitaryDocument: Yup.string().max(64).label(t('patient.form.sanitary.document'))
+      // name: Yup.string().max(64).required().label(t('patient.form.name')),
+      // lastName: Yup.string().max(64).required().label(t('patient.form.lastname')),
+      // identityDocumentTypeId: Yup.number().required().label(t('patient.form.identity.document')),
+      // identityDocument: Yup.string().max(64).required().label(t('patient.form.identity.document')),
+      // sanitaryDocument: Yup.string().max(64).label(t('patient.form.sanitary.document')),
+      // mobilePhone: Yup.string().max(32).required().label(t('patient.form.mobile.phone')),
+      // addressLine1: Yup.string().required().label(t('patient.form.address.first.part'))
+      // postalCodeId: Yup.number().required().label(t('patient.form.address.postal.code'))
     }
 
     const validationSchema = markRaw(Yup.object().shape(validationEntity));

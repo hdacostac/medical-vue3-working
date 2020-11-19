@@ -2,9 +2,14 @@
    <div class="field">
       <label :for="id" class="label">{{ label }}</label>
       <div class="control">
-         <PrimeCalendar :id="id" v-model="value" v-bind="$attrs" v-mask="'##/##/####'" dateFormat="dd/mm/yy" 
-            :yearNavigator="true" yearRange="1900:2100" :monthNavigator="true" :manualInput="true" showIcon="true"
-            :locale="this[this.$i18n.locale]" :showButtonBar="true" />
+         <Field :name="id" v-slot="{ field }">
+            <PrimeCalendar :id="id" v-model="value" v-bind="field" v-mask="'##/##/####'" dateFormat="dd/mm/yy" 
+               :yearNavigator="true" yearRange="1900:2100" :monthNavigator="true" :manualInput="true" showIcon="true"
+               :locale="this[this.$i18n.locale]" :showButtonBar="true" :placeHolder="placeHolder" />
+            <ErrorMessage :name="id" v-slot="{ message }">
+               <InlineMessage v-if="message">{{ $t(message.key, message.values) }}</InlineMessage>
+            </ErrorMessage>
+         </Field>
       </div>
    </div>
 </template>
@@ -16,12 +21,19 @@
 </style>
 
 <script>
+import { Field, ErrorMessage } from 'vee-validate';
+import InlineMessage from 'primevue/inlinemessage';
 import {mask} from 'vue-the-mask';
 
 export default {
    name: 'Calendar',
    inheritAttrs: false,
    directives: {mask},
+   components: {
+      Field,
+      ErrorMessage,
+      InlineMessage
+   },
    mounted() {
       this.locale = this.$i18n.locale;
    },
@@ -63,7 +75,10 @@ export default {
       },
       label: {
          type: String
-      }
+      },
+      placeHolder: {
+         type: String
+      },
    },
    computed: {
       value: {

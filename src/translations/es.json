@@ -8,6 +8,7 @@
     "patient.form.placeholder.lastname": "Apellidos del paciente",
     "patient.form.identity.document": "Documento de identidad",
     "patient.form.placeholder.identity.document": "Documento de identidad",
+    "patient.form.identity.document.type.required": "Indique un tipo de documento",
     "patient.form.sanitary.document": "Documento sanitario",
     "patient.form.placeholder.sanitary.document": "Documento sanitario",
     "patient.form.sex": "Sexo",
