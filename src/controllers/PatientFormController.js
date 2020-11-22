@@ -12,14 +12,14 @@ class PatientFormController extends AbstractActionForm {
         entity.municipalityId = this.ctx.municipalitySelected ? this.ctx.municipalitySelected.id : null;
         entity.postalCodeId = this.ctx.postalCodeSelected ? this.ctx.postalCodeSelected.id : null;
 
-        entity.birthDate ? entity.birthDate = entity.birthDate.toLocaleDateString() : entity.birthDate = null;
+        this.ctx.currentBirthDate ? entity.birthDate = this.ctx.currentBirthDate.toLocaleDateString() : entity.birthDate = null;
     }
 
-    setFieldError(item) {
-        if(item[1].field == 'identityDocumentTypeId') {
+    setFieldError(errorField) {
+        if(errorField[1].field == 'identityDocumentTypeId') {
             this.form.setFieldError('identityDocument', { key: 'patient.form.identity.document.type.required' });
         } else {
-            super.setFieldError(item);
+            super.setFieldError(errorField);
         }
     }
 

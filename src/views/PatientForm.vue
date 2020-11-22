@@ -41,7 +41,7 @@
               </div>
               <div class="column is-half">
                 <Calendar id="birthDate" :label="$t('patient.form.birth.date')"
-                  :placeHolder="$t('patient.form.placeholder.birth.date')" v-model="patient.birthDate"></Calendar>
+                  :placeHolder="$t('patient.form.placeholder.birth.date')" v-model="currentBirthDate"></Calendar>
               </div>
               <div class="column is-half">
                 <div class="columns is-multiline">
@@ -206,6 +206,7 @@ export default {
       countryItems: [{id: 1, code: "Loading data..."}],
       identityDocumentsTypeSelected: null,
       identityDocumentsTypesItems: [{id: 1, code: "Loading data..."}],
+      currentBirthDate: null,
       tabModel: [{
         tabId: 'tab1',
         title: 'Datos principales',
@@ -250,14 +251,14 @@ export default {
       return this.isSubmitting ? 'pi pi-spin pi-spinner' : 'pi pi-check';
     },
     calculateAge: function () {
-      if(this.patient.birthDate == null) {
+      if(this.currentBirthDate == null) {
         return {
           isValid: false,
           msg: this.t('patient.form.placeholder.birth.date.calculate.label')
         };
       }
 
-      let ageCalculated = new Date().getFullYear() - new Date(this.patient.birthDate).getFullYear();
+      let ageCalculated = new Date().getFullYear() - new Date(this.currentBirthDate).getFullYear();
 
       if(ageCalculated >= 0 && ageCalculated <= 200){
         return {
@@ -266,7 +267,7 @@ export default {
         };
       }
 
-      let dateParts = this.patient.birthDate.split("/");
+      let dateParts = this.currentBirthDate.split("/");
 
       if(dateParts.length == 3) {
         let dateParsed = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
