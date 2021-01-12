@@ -1,5 +1,5 @@
 {
-    "restServicesUrl": "https://medical.ddnsking.com/patients/api",
-    "oauthServerUrl": "https://medical.ddnsking.com/authorization/oauth",
+    "restServicesUrl": "https://da7b102b06b2.ngrok.io/patients/api",
+    "oauthServerUrl": "https://da7b102b06b2.ngrok.io/authorization/oauth",
     "avatarImageMaxSize": 1048576
 }
