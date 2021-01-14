@@ -5,7 +5,7 @@
          <Field :name="id" v-slot="{ field }">
             <PrimeCalendar :id="id" v-model="value" v-bind="field" v-mask="'##/##/####'" dateFormat="dd/mm/yy" 
                :yearNavigator="true" yearRange="1900:2100" :monthNavigator="true" :manualInput="true" showIcon="true"
-               :locale="this[this.$i18n.locale]" :showButtonBar="true" :placeHolder="placeHolder" />
+               :showButtonBar="true" :placeHolder="placeHolder" />
             <ErrorMessage :name="id" v-slot="{ message }">
                <InlineMessage v-if="message">{{ $t(message.key, message.values) }}</InlineMessage>
             </ErrorMessage>

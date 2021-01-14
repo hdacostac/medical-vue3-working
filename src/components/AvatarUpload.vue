@@ -7,7 +7,7 @@
          <img :src="avatarDownloaded" style="max-width: 256px">
       </figure>
       <div class="file">
-         <FileUpload mode="basic" :customUpload="true" @uploader="avatarUploader" accept="image/*" 
+         <FileUpload mode="basic" :name=files :customUpload="true" @uploader="avatarUploader" accept="image/*" 
             :maxFileSize="avatarImageMaxSizeValue" auto="true" style="margin: 0 auto;"
             :chooseLabel="chooseLabel"
             :disabled="uploadDisabled"
@@ -38,6 +38,7 @@ export default {
          uploadDisabled: false,
          avatarImageMaxSizeValue: avatarImageMaxSize,
          avatarDownloaded: null,
+         files: null
       }
    },
    emits: ['on-success'],
@@ -80,6 +81,7 @@ export default {
 
          let formData = new FormData();
          formData.append("image", event.files[0]);
+         this.files = null;
 
          let self = this;
          restApi.post('/v1/resources/image', formData, {
@@ -117,6 +119,9 @@ export default {
 
             showMessage(self, {severity: 'error', summary: self.t('global.problem'), detail: self.t('avatar.patient.download.problem'), life: 3000});
          });
+      },
+      reload: function() {
+         this.$forceUpdate();
       }
 	}
 }

@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import PrimeVue from 'primevue/config';
 import router from './router';
 import store from './store';
 
@@ -27,7 +28,7 @@ initOAuthServiceHandler(oauthServerUrl);
 
 const app = createApp(App);
 
-app.config.globalProperties.$primevue = {ripple: true};
+app.use(PrimeVue, {ripple: true});
 app.component('PrimeInputText', InputText);
 app.component('PrimeRadioButton', RadioButton);
 app.component('PrimeDropdown', Dropdown);
@@ -36,5 +37,12 @@ app.component('PrimeButton', Button);
 app.component('PrimeToolbar', Toolbar);
 app.component('PrimeSplitButton', SplitButton);
 app.component('Toast', Toast);
+
+app.use(PrimeVue, {
+    locale: {
+        monthNames: ["January","February","March","April","May","June","July","August","September","October","November","December"],
+        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    }
+});
 
 app.use(store).use(router).use(ToastService).use(i18n).mount('#app');
