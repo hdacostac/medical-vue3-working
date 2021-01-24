@@ -1,18 +1,31 @@
 import AbstractActionForm from './AbstractActionForm';
+import { transformNullValues } from '@/utils/ControllerUtils';
 
 class PatientFormController extends AbstractActionForm {
 
     validate(entity, validatingOnAction) {
         super.validate(entity, validatingOnAction);
 
-        entity.identityDocumentTypeId = this.ctx.identityDocumentsTypeSelected ? this.ctx.identityDocumentsTypeSelected.id : null;
-        entity.bloodGroupId = this.ctx.bloodGroupSelected ? this.ctx.bloodGroupSelected.id : null;
-        entity.countryBirthId = this.ctx.countrySelected ? this.ctx.countrySelected.id : null;
-        entity.provinceId = this.ctx.provinceSelected ? this.ctx.provinceSelected.id : null;
-        entity.municipalityId = this.ctx.municipalitySelected ? this.ctx.municipalitySelected.id : null;
-        entity.postalCodeId = this.ctx.postalCodeSelected ? this.ctx.postalCodeSelected.id : null;
+        entity.identityDocumentTypeId = transformNullValues(validatingOnAction, this.ctx.identityDocumentsTypeSelected?.id, "Combo");
+        entity.bloodGroupId = transformNullValues(validatingOnAction, this.ctx.bloodGroupSelected?.id, "Combo");
+        entity.countryBirthId = transformNullValues(validatingOnAction, this.ctx.countrySelected?.id, "Combo");
+        entity.provinceId = transformNullValues(validatingOnAction, this.ctx.provinceSelected?.id, "Combo");
+        entity.municipalityId = transformNullValues(validatingOnAction, this.ctx.municipalitySelected?.id, "Combo");
+        entity.postalCodeId = transformNullValues(validatingOnAction, this.ctx.postalCodeSelected?.id, "Combo");
 
-        this.ctx.currentBirthDate ? entity.birthDate = this.ctx.currentBirthDate.toLocaleDateString() : entity.birthDate = null;
+        this.ctx.currentBirthDate ? entity.birthDate = this.ctx.currentBirthDate.toLocaleDateString() : entity.birthDate = transformNullValues(validatingOnAction, this.ctx.currentBirthDate, "Date");
+
+        console.log("Fecha de naciemitno:'" + entity.birthDate + "'");
+    }
+
+    handleExceptions(entity, e) {
+        super.handleExceptions(entity, e);
+
+        if(e.response.data.code == "8000" && e.response.data.messageKey == "exception.patient.already.exists") {
+            console.log("Paciente que ya existe");
+        }
+
+        this.setSubmittingFlag(false);
     }
 
     setFieldError(errorField) {

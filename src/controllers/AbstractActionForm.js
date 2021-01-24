@@ -92,7 +92,7 @@ class AbstractActionForm {
             console.log("typeof " + key + ":" + typeof formValues[key]);
 
             if(typeof formValues[key] === "string") {
-                if(formValues[key].trim() == '' || formValues[key] == null){
+                if(formValues[key].trim() == '' || formValues[key] == null) {
                     console.log("\tSetting " + key + " to null");
 
                     this.form.setFieldValue(key, null);

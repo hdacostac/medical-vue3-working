@@ -324,7 +324,7 @@ export default {
     },
     getBloodGroupsItems: function() {
       fillArrayFromRest('/v1/simple/blood-groups', this, 'bloodGroupsItems', null, () => {
-          this.bloodGroupsItems.unshift( { id: 0, code: "", description: this.t('global.option.not.selected') } )
+          this.bloodGroupsItems.unshift( { id: -1, code: "", description: this.t('global.option.not.selected') } )
       });
     },
     getIdentityDocumentTypesItems: function() {
@@ -335,7 +335,7 @@ export default {
     },
     getCountryItems: function() {
       fillArrayFromRest('/v1/simple/countries', this, 'countryItems', null, () => {
-          this.countryItems.unshift( { id: 0, code: "", description: this.t('global.option.not.selected') } )
+          this.countryItems.unshift( { id: -1, code: "", description: this.t('global.option.not.selected') } )
       });
     },
     getMunicipalityItems: function(provinceId) {
