@@ -21,7 +21,7 @@ class PatientFormController extends AbstractActionForm {
     handleExceptions(entity, e) {
         super.handleExceptions(entity, e);
 
-        if(e.response.data.code == "8000" && e.response.data.messageKey == "exception.patient.already.exists") {
+        if(e.response.data.code == "25100" || e.response.data.code == "25200") {
             console.log("Paciente que ya existe");
         }
 
