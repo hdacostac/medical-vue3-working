@@ -238,7 +238,7 @@ export default {
       document.querySelector('#pageloader').classList.remove("is-active");
     })
 
-    this.patientFormController = new PatientFormController('/v1/patients', '/v1/patients', true);
+    this.patientFormController = new PatientFormController('/v1/persons', '/v1/persons', true);
 
     this.getSexItems();
     this.getBloodGroupsItems();
